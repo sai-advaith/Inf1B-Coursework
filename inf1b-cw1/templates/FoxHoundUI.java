@@ -28,22 +28,43 @@ public class FoxHoundUI {
         {
             for(int j = 0;j<dimension;j++)
             {
-                if (i == 1 && j == ((int)(players[k].charAt(0)) -65))
+                if (i == 0 && k < players.length && j == ((int)(players[k].charAt(0)) -65))
                 {
-                    board[i][j] = HOUND_FIELD;
+                    board[i][j] = FoxHoundUtils.HOUND_FIELD;
                     k++;
                 }
-
-                else if (i == dimension - 1 && j == ((int)players[k].charAt(0) - 65))
+                else if (i == dimension - 1 && k < players.length && j == ((int)(players[k].charAt(0)) - 65))
                 {
-                    board[i][j] = FOX_FIELD;
+                    board[i][j] = FoxHoundUtils.FOX_FIELD;
                     k++;
                 }
                 else 
-                    board[i][j] = EMPTY_FIELD;          
+                    board[i][j] = FoxHoundUtils.EMPTY_FIELD;          
             }
         }
-        System.out.println(Arrays.toString(board));
+        System.out.print("  ");
+        for(int i = 0;i<board.length;i++)
+        {
+            System.out.print(i+1);
+        }
+        System.out.println();
+        for(int i = 0;i<board.length;i++)
+        {
+            System.out.print((char)(65+i));
+            System.out.print(' ');
+            for(int j = 0;j<board.length;j++)
+            {
+                System.out.print(board[i][j]);
+            }
+            System.out.print(' ');
+            System.out.print((char)(65+i));
+            System.out.println();
+        }
+        System.out.print("  ");
+        for(int i = 0;i<board.length;i++)
+        {
+            System.out.print(i+1);
+        }
     }
 
     /**

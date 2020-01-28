@@ -88,10 +88,10 @@ public class FoxHoundGame {
      */
     public static void main(String[] args) {
 
-        int dimension = FoxHoundUtils.DEFAULT_DIM;
+        // int dimension = FoxHoundUtils.DEFAULT_DIM;
 
-        String[] players = FoxHoundUtils.initialisePositions(dimension);
-        displayBoard(players,dimension);
+        String[] players = FoxHoundUtils.initialisePositions(5);
+        FoxHoundUI.displayBoard(players,5);
         // System.out.println(Arrays.toString(players));
         // gameLoop(dimension, players);
 
