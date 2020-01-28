@@ -27,11 +27,6 @@ public class FoxHoundUtils {
     public static final int DEFAULT_FOX = 1;
     public static final int DEFAULT_HOUND = 4;
     public static String[] initialisePositions(int dimension) {
-        if (dimension < MIN_DIM || dimension > MAX_DIM)
-        {
-            throw new IllegalDimensionArgument("the dimension is not valid");
-        }
-        else{
             int hounds = dimension/2;
             int fox= DEFAULT_FOX;
             String positions[] = new String[hounds+fox];
@@ -55,11 +50,55 @@ public class FoxHoundUtils {
     
             }
             return positions;
-        }
+        
     
     }
     public static boolean isValidMove(int dim, String[] players, char figure,String origin,String destination)
     {
-        
+        boolean hound_validity = true;
+        boolean fox_validity = true;
+        if (Character.isLetter(origin.charAt(0)) && Character.isLetter(destination.charAt(0))  && Character.isDigit(destination.charAt(1)) && Character.isDigit(destination.charAt(1)))
+        {
+            int origin_row = (int)(origin.charAt(1)) - 49;
+            int origin_column = (int)(origin.charAt(0)) - 65;
+            int destination_row = (int)(destination.charAt(1)) - 49;
+            int destination_column = (int)(destination.charAt(0)) - 65;
+            switch(figure)
+            {
+                case 'H':
+                    hound_validity = hound_validity && (origin_row == destination_row - 1);
+                    if (origin_column == (dim - 1))
+                        hound_validity = hound_validty && (destination_row == (origin_column - 1)); 
+                    else if (origin_column == 0)
+                        hound_validity = hound_validity && (destination_row == origin_column + 1);
+                    else 
+                    {
+                        boolean test = (destination_row == (origin_column + 1)) || (desitnation_row == origin_column - 1);
+                        hound_validity = hound_validity && test;
+                    }
+                    return hound_validity;
+                    break;
+                case 'F':
+                    if(origin_row == (dim - 1))
+                    {
+                        fox_validity = fox_validity && (destination_row == (origin_row + 1));
+                        fox_validity = fox_validity && ((destination_column == (origin_column + 1)) || (destination_column == (origin_column - 1)));
+                    }
+                    else
+                    {
+                        fox_validity = fox_validity && ((destination_row == (origin_row + 1)) || (destination_row == (origin_row - 1)));
+                        if (origin_column == (dim - 1))
+                            fox_validity = fox_validity && (destination_column == (origin_column - 1));
+                        else if(origin_column == 0)
+                            fox_validity = fox_validity && (destination_column == (origin_column + 1));
+                        else
+                            fox_validity = fox_validity && ((destination_column == (origin_column + 1)) || (destination_column == (origin_column - 1)));            
+                    }
+                    return fox_validity;
+                    break;
+            }
+        }
+        else
+            return false;
     }
 }
