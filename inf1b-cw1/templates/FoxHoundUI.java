@@ -45,26 +45,27 @@ public class FoxHoundUI {
         System.out.print("  ");
         for(int i = 0;i<board.length;i++)
         {
-            System.out.print(i+1);
+            System.out.print((char)(65+i));
         }
         System.out.println();
         for(int i = 0;i<board.length;i++)
         {
-            System.out.print((char)(65+i));
+            System.out.print((i+1));
             System.out.print(' ');
             for(int j = 0;j<board.length;j++)
             {
                 System.out.print(board[i][j]);
             }
             System.out.print(' ');
-            System.out.print((char)(65+i));
+            System.out.print(1+i);
             System.out.println();
         }
         System.out.print("  ");
         for(int i = 0;i<board.length;i++)
         {
-            System.out.print(i+1);
+            System.out.print((char)(65+i));
         }
+        System.out.println();
     }
 
     /**

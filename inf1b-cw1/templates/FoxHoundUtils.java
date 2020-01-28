@@ -27,28 +27,39 @@ public class FoxHoundUtils {
     public static final int DEFAULT_FOX = 1;
     public static final int DEFAULT_HOUND = 4;
     public static String[] initialisePositions(int dimension) {
-        int hounds = dimension/2;
-        int fox= DEFAULT_FOX;
-        String positions[] = new String[hounds+fox];
-        int j = 0;
-        for(int i = 1;i<dimension;i++)
-        { // Hounds implementation
-            if (i%2 == 1)
-            {
-                positions[j] = String.valueOf((char)(65+i)) + "1" ;
-                j++;
-            }
-        }
-        if (dimension%2 == 0)
-            positions[positions.length-1] = String.valueOf((char)(65 + ((dimension/2)))) + String.valueOf(dimension);
-        else
+        if (dimension < MIN_DIM || dimension > MAX_DIM)
         {
-            if (((1+dimension)/2) % 2 == 1 )
-                positions[positions.length-1] = String.valueOf((char)(65 + ((1 + dimension)/2))) + String.valueOf(dimension);
-            else
-                positions[positions.length-1] = String.valueOf((char)(65 + ((dimension/2)))) + String.valueOf(dimension);
-
+            throw new IllegalDimensionArgument("the dimension is not valid");
         }
-        return positions;
+        else{
+            int hounds = dimension/2;
+            int fox= DEFAULT_FOX;
+            String positions[] = new String[hounds+fox];
+            int j = 0;
+            for(int i = 1;i<dimension;i++)
+            { // Hounds implementation
+                if (i%2 == 1)
+                {
+                    positions[j] = String.valueOf((char)(65+i)) + "1" ;
+                    j++;
+                }
+            }
+            if (dimension%2 == 0)
+                positions[positions.length-1] = String.valueOf((char)(65 + ((dimension/2)))) + String.valueOf(dimension);
+            else
+            {
+                if (((1+dimension)/2) % 2 == 1 )
+                    positions[positions.length-1] = String.valueOf((char)(65 + ((1 + dimension)/2))) + String.valueOf(dimension);
+                else
+                    positions[positions.length-1] = String.valueOf((char)(65 + ((dimension/2)))) + String.valueOf(dimension);
+    
+            }
+            return positions;
+        }
+    
+    }
+    public static boolean isValidMove(int dim, String[] players, char figure,String origin,String destination)
+    {
+        
     }
 }
