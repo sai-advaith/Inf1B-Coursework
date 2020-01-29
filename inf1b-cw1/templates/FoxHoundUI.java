@@ -28,18 +28,18 @@ public class FoxHoundUI {
         {
             for(int j = 0;j<dimension;j++)
             {
-                if (i == 0 && k < players.length && j == ((int)(players[k].charAt(0)) -65))
-                {
-                    board[i][j] = FoxHoundUtils.HOUND_FIELD;
-                    k++;
-                }
-                else if (i == dimension - 1 && k < players.length && j == ((int)(players[k].charAt(0)) - 65))
-                {
-                    board[i][j] = FoxHoundUtils.FOX_FIELD;
-                    k++;
-                }
-                else 
-                    board[i][j] = FoxHoundUtils.EMPTY_FIELD;          
+                    if (k < players.length-1 && (i == row(players[k]) && j == column(players[k])))
+                    {
+                        board[i][j] = FoxHoundUtils.HOUND_FIELD;
+                        k++;
+                    }
+                    else if ((k == players.length-1 && (i == row(players[k]) && j == column(players[k]))))
+                    {
+                        board[i][j] = FoxHoundUtils.FOX_FIELD;
+                        k++;
+                    } 
+                    else 
+                        board[i][j] = FoxHoundUtils.EMPTY_FIELD;
             }
         }
         System.out.print("  ");
@@ -67,7 +67,15 @@ public class FoxHoundUI {
         }
         System.out.println();
     }
-
+    public static int row(String s)
+    {
+        return (Integer.parseInt(s.substring(1))-1);
+    }
+    public static int column(String s)
+    {
+        int k = (int)(s.charAt(0)) - 65;
+        return k;
+    }
     /**
      * Print the main menu and query the user for an entry selection.
      * 

@@ -7,6 +7,7 @@ import java.util.Scanner;
  * are processed and handler functions are called.
   */
 import java.util.*;
+
 public class FoxHoundGame {
 
     /** 
@@ -52,15 +53,22 @@ public class FoxHoundGame {
         char turn = FoxHoundUtils.FOX_FIELD;
         boolean exit = false;
         while(!exit) {
+            System.out.println(Arrays.toString(players));
             System.out.println("\n#################################");
             FoxHoundUI.displayBoard(players, dim);
-
             int choice = FoxHoundUI.mainMenuQuery(turn, STDIN_SCAN);
             
             // handle menu choice
             switch(choice) {
                 case FoxHoundUI.MENU_MOVE:
+                    String[] k = FoxHoundUI.positioinQuery(dim, STDIN_SCAN);
+                    FoxHoundUtils.isValidMove(dim, players, turn, k[0], k[1]);
+                    System.out.println(k[1]);
+                    int d = find(players,k[0]);
+                    System.out.println(d);
+                    players[d] = k[1]; // can we use ArrayUtils?
                     turn = swapPlayers(turn);
+                    System.out.println(Arrays.toString(players));
                     break;
                 case FoxHoundUI.MENU_EXIT:
                     exit = true;
@@ -70,7 +78,16 @@ public class FoxHoundGame {
             }
         }
     }
-
+    public static int find(String[] players, String w)
+    {
+        int k = 0;
+        for(int i = 0;i<players.length;i++)
+        {
+            if(players[i].equals(w))
+                k = i;
+        }
+        return k;
+    }
     /**
      * Entry method for the Fox and Hound game. 
      * 
@@ -90,12 +107,12 @@ public class FoxHoundGame {
 
         int dimension = FoxHoundUtils.DEFAULT_DIM;
         String[] players = FoxHoundUtils.initialisePositions(dimension);
-        System.out.println(Arrays.toString(players));
-        System.out.println(FoxHoundUtils.isValidMove(8, players, 'F', "E8", "D7"));
-        // FoxHoundUI.displayBoard(players,dimension);
         // System.out.println(Arrays.toString(players));
-        // gameLoop(dimension, players);
-        FoxHoundUI.positioinQuery(8, STDIN_SCAN);
+        // System.out.println(FoxHoundUtils.isValidMove(8, players, 'F', "E8", "D7"));
+        // FoxHoundUI.displayBoard(players,dimension);
+        System.out.println(Arrays.toString(players));
+        gameLoop(dimension, players);
+        // FoxHoundUI.positioinQuery(8, STDIN_SCAN);
         // Close the scanner reading the standard input stream       
         STDIN_SCAN.close();
     }
