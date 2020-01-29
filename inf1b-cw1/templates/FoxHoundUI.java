@@ -108,6 +108,24 @@ public class FoxHoundUI {
 
         return input;
     }
+    public static String[] positioinQuery(int dimesnion, Scanner stdIn)
+    {
+        String[] str = new String[2];
+        if (stdIN == null)
+            throw new NullPointerException("cannot be null");
+        if (dimension > FoxHoundUtils.MAX_DIM || dimension < FoxHoundUtils.MIN_DIM)
+            throw new IllegalArgumentException("invalid dimension");
+        System.out.println("Enter destination and origin between A1 and H8");
+        String a = stdIn.next();
+        if ((Character.toUpperCase(a.charAt(0)) > FoxHoundUtils.HOUND_FIELD) || (Character.getNumericValue(a.charAt(1)) > 8))
+            throw new IllegalArgumentException("invalid coordinate");
+        String b = stdIn.next();
+        if ((Character.toUpperCase(b.charAt(0)) > FoxHoundUtils.FOX_FIELD || (Character.getNumericValue(b.charAt(0)) > 8)))
+            throw new IllegalArgumentException("invalid coordinate");
+        str[0] = a;
+        str[1] = b;
+        return str;
+    }
 }
 
 

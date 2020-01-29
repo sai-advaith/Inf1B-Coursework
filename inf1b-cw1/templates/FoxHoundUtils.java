@@ -27,7 +27,7 @@ public class FoxHoundUtils {
     public static final int DEFAULT_FOX = 1;
     public static final int DEFAULT_HOUND = 4;
     public static String[] initialisePositions(int dimension) {
-            if (dimension <= MIN_DIM || dimension >= MAX_DIM)
+            if (dimension < MIN_DIM || dimension > MAX_DIM)
                 throw new IllegalArgumentException("not possible");
             int hounds = (int)Math.floor(dimension/2);
             int fox= DEFAULT_FOX;
@@ -61,7 +61,7 @@ public class FoxHoundUtils {
         boolean fox_validity = true;
         if (players == null)
             throw new NullPointerException("null array");
-        if (figure != 'H' && figure != 'F')
+        if (figure != HOUND_FIELD && figure != FOX_FIELD)
             throw new IllegalArgumentException("not valid");
         if (Character.isLetter(origin.charAt(0)) && Character.isLetter(destination.charAt(0))  && Character.isDigit(destination.charAt(1)) && Character.isDigit(destination.charAt(1)))
         {
@@ -71,7 +71,7 @@ public class FoxHoundUtils {
             int destination_column = (int)(destination.charAt(0)) - 65;
             switch(figure)
             {
-                case 'H':
+                case HOUND_FIELD:
                     hound_validity = hound_validity && (FoxHoundUtils.occupancy(players,destination));
                     hound_validity = hound_validity && (origin_row == destination_row - 1);
                     if (origin_column == (dim - 1))
@@ -84,7 +84,7 @@ public class FoxHoundUtils {
                         hound_validity = hound_validity && test;
                     }
                     return hound_validity;
-                case 'F':
+                case FOX_FIELD:
                     fox_validity = fox_validity && (FoxHoundUtils.occupancy(players,destination));
                     if(origin_row == (dim - 1))
                     {

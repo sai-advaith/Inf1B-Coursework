@@ -88,16 +88,15 @@ public class FoxHoundGame {
      */
     public static void main(String[] args) {
 
-        // int dimension = FoxHoundUtils.DEFAULT_DIM;
-
-        String[] players = FoxHoundUtils.initialisePositions(9);
+        int dimension = FoxHoundUtils.DEFAULT_DIM;
+        String[] players = FoxHoundUtils.initialisePositions(dimension);
         System.out.println(Arrays.toString(players));
         System.out.println(FoxHoundUtils.isValidMove(8, players, 'F', "E8", "D7"));
-        // FoxHoundUI.displayBoard(players,5);
-        // System.out.println(Arrays.toString(players));
-        // gameLoop(dimension, players);
+        FoxHoundUI.displayBoard(players,dimension);
+        System.out.println(Arrays.toString(players));
+        gameLoop(dimension, players);
 
         // Close the scanner reading the standard input stream       
-        // STDIN_SCAN.close();
+        STDIN_SCAN.close();
     }
 }
