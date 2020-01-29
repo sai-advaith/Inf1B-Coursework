@@ -108,20 +108,51 @@ public class FoxHoundUI {
 
         return input;
     }
-    public static String[] positioinQuery(int dimesnion, Scanner stdIn)
+    public static String[] positioinQuery(int dimension, Scanner stdIn)
     {
         String[] str = new String[2];
         boolean g = true;
+        
         do
         {
+            System.out.println("Provide origin and destination coordinates");
             if (stdIn == null)
-                g  = false;
-            else if(dimension > FoxHoundUtils.MAX_DIM || dimension < FoxHoundUtils.MIN_DIM)
+            {
                 g = false;
-            
-        }while(g);
-        str[0] = a;
-        str[1] = b;
+                System.out.println("ERROR: Please enter valid coordinate pair separated by space.");
+                continue;
+            }
+            else if(dimension > FoxHoundUtils.MAX_DIM || dimension < FoxHoundUtils.MIN_DIM)
+            {
+                g = false;
+                System.out.println("ERROR: Please enter valid coordinate pair separated by space.");
+                continue;
+            }
+            System.out.println("Enter two positions between A1-H8");
+            String a = stdIn.next();
+            String b = stdIn.next();
+            int c = 0;
+            char row = a.charAt(0);
+            char max = (char)(64+dimension);
+            try{
+                c = Integer.parseInt(b.substring(1));
+            }
+            catch(NumberFormatException e)
+            {
+                g = false;
+                System.out.println("ERROR: Please enter valid coordinate pair separated by space.");
+                continue;
+            }
+            if(row>max || c>dimension)
+            {
+                g = false;
+                System.out.println("ERROR: Please enter valid coordinate pair separated by space.");
+                continue;
+            }
+            str[0] = a;
+            str[1] = b;
+            g = true;
+        }while(!g);
         return str;
     }
 }

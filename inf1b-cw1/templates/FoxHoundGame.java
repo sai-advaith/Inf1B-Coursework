@@ -92,10 +92,10 @@ public class FoxHoundGame {
         String[] players = FoxHoundUtils.initialisePositions(dimension);
         System.out.println(Arrays.toString(players));
         System.out.println(FoxHoundUtils.isValidMove(8, players, 'F', "E8", "D7"));
-        FoxHoundUI.displayBoard(players,dimension);
-        System.out.println(Arrays.toString(players));
-        gameLoop(dimension, players);
-
+        // FoxHoundUI.displayBoard(players,dimension);
+        // System.out.println(Arrays.toString(players));
+        // gameLoop(dimension, players);
+        FoxHoundUI.positioinQuery(8, STDIN_SCAN);
         // Close the scanner reading the standard input stream       
         STDIN_SCAN.close();
     }
