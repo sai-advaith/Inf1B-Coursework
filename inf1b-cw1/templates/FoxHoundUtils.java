@@ -27,7 +27,9 @@ public class FoxHoundUtils {
     public static final int DEFAULT_FOX = 1;
     public static final int DEFAULT_HOUND = 4;
     public static String[] initialisePositions(int dimension) {
-            int hounds = dimension/2;
+            if (dimension <= MIN_DIM || dimension >= MAX_DIM)
+                throw new IllegalArgumentException("not possible");
+            int hounds = (int)Math.floor(dimension/2);
             int fox= DEFAULT_FOX;
             String positions[] = new String[hounds+fox];
             int j = 0;
@@ -57,6 +59,10 @@ public class FoxHoundUtils {
     {
         boolean hound_validity = true;
         boolean fox_validity = true;
+        if (players == null)
+            throw new NullPointerException("null array");
+        if (figure != 'H' && figure != 'F')
+            throw new IllegalArgumentException("not valid");
         if (Character.isLetter(origin.charAt(0)) && Character.isLetter(destination.charAt(0))  && Character.isDigit(destination.charAt(1)) && Character.isDigit(destination.charAt(1)))
         {
             int origin_row = (int)(origin.charAt(1)) - 49;
@@ -66,22 +72,23 @@ public class FoxHoundUtils {
             switch(figure)
             {
                 case 'H':
+                    hound_validity = hound_validity && (FoxHoundUtils.occupancy(players,destination));
                     hound_validity = hound_validity && (origin_row == destination_row - 1);
                     if (origin_column == (dim - 1))
-                        hound_validity = hound_validty && (destination_row == (origin_column - 1)); 
+                        hound_validity = hound_validity && (destination_row == (origin_column - 1)); 
                     else if (origin_column == 0)
                         hound_validity = hound_validity && (destination_row == origin_column + 1);
                     else 
                     {
-                        boolean test = (destination_row == (origin_column + 1)) || (desitnation_row == origin_column - 1);
+                        boolean test = (destination_column == (origin_column + 1)) || (destination_column == origin_column - 1);
                         hound_validity = hound_validity && test;
                     }
                     return hound_validity;
-                    break;
                 case 'F':
+                    fox_validity = fox_validity && (FoxHoundUtils.occupancy(players,destination));
                     if(origin_row == (dim - 1))
                     {
-                        fox_validity = fox_validity && (destination_row == (origin_row + 1));
+                        fox_validity = fox_validity && (destination_row == (origin_row - 1));
                         fox_validity = fox_validity && ((destination_column == (origin_column + 1)) || (destination_column == (origin_column - 1)));
                     }
                     else
@@ -95,10 +102,24 @@ public class FoxHoundUtils {
                             fox_validity = fox_validity && ((destination_column == (origin_column + 1)) || (destination_column == (origin_column - 1)));            
                     }
                     return fox_validity;
-                    break;
+                default:
+                    return false;
             }
         }
         else
             return false;
+    }
+    public static boolean occupancy(String[] players, String destination)
+    {
+        boolean g = true;
+        for(int i = 0;i<players.length;i++)
+        {
+            if (players[i].equals(destination))
+            {
+                g = false;
+                break;
+            }
+        }
+        return g;
     }
 }

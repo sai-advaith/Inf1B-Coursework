@@ -90,8 +90,10 @@ public class FoxHoundGame {
 
         // int dimension = FoxHoundUtils.DEFAULT_DIM;
 
-        String[] players = FoxHoundUtils.initialisePositions(5);
-        FoxHoundUI.displayBoard(players,5);
+        String[] players = FoxHoundUtils.initialisePositions(9);
+        System.out.println(Arrays.toString(players));
+        System.out.println(FoxHoundUtils.isValidMove(8, players, 'F', "E8", "D7"));
+        // FoxHoundUI.displayBoard(players,5);
         // System.out.println(Arrays.toString(players));
         // gameLoop(dimension, players);
 
