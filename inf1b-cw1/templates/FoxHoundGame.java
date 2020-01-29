@@ -61,12 +61,19 @@ public class FoxHoundGame {
             // handle menu choice
             switch(choice) {
                 case FoxHoundUI.MENU_MOVE:
-                    String[] k = FoxHoundUI.positioinQuery(dim, STDIN_SCAN);
-                    FoxHoundUtils.isValidMove(dim, players, turn, k[0], k[1]);
-                    System.out.println(k[1]);
+                    boolean g = false;
+                    int c = 0;
+                    String[] k;
+                    do
+                    {
+                        if (c>0)
+                            System.out.println("invalid input");
+                        k = FoxHoundUI.positioinQuery(dim, STDIN_SCAN);
+                        g = FoxHoundUtils.isValidMove(dim, players, turn, k[0], k[1]);
+                        c++;
+                    }while(!g);                    
                     int d = find(players,k[0]);
-                    System.out.println(d);
-                    players[d] = k[1]; // can we use ArrayUtils?
+                    players[d] = k[1];
                     turn = swapPlayers(turn);
                     System.out.println(Arrays.toString(players));
                     break;
@@ -108,9 +115,9 @@ public class FoxHoundGame {
         int dimension = FoxHoundUtils.DEFAULT_DIM;
         String[] players = FoxHoundUtils.initialisePositions(dimension);
         // System.out.println(Arrays.toString(players));
-        // System.out.println(FoxHoundUtils.isValidMove(8, players, 'F', "E8", "D7"));
+        // System.out.println(FoxHoundUtils.isValidMove(8, players, 'H', "H1", "G2"));
         // FoxHoundUI.displayBoard(players,dimension);
-        System.out.println(Arrays.toString(players));
+        // System.out.println(Arrays.toString(players));
         gameLoop(dimension, players);
         // FoxHoundUI.positioinQuery(8, STDIN_SCAN);
         // Close the scanner reading the standard input stream       

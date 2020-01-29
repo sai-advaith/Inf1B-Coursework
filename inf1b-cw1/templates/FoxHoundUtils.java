@@ -69,15 +69,16 @@ public class FoxHoundUtils {
             int origin_column = (int)(origin.charAt(0)) - 65;
             int destination_row = (int)(destination.charAt(1)) - 49;
             int destination_column = (int)(destination.charAt(0)) - 65;
+            // System.out.println(origin_row+" "+origin_column+" "+destination_row+" "+destination_column);
             switch(figure)
             {
                 case HOUND_FIELD:
                     hound_validity = hound_validity && (FoxHoundUtils.occupancy(players,destination));
                     hound_validity = hound_validity && (origin_row == destination_row - 1);
                     if (origin_column == (dim - 1))
-                        hound_validity = hound_validity && (destination_row == (origin_column - 1)); 
+                        hound_validity = hound_validity && (destination_column == (origin_column - 1)); 
                     else if (origin_column == 0)
-                        hound_validity = hound_validity && (destination_row == origin_column + 1);
+                        hound_validity = hound_validity && (destination_column == origin_column + 1);
                     else 
                     {
                         boolean test = (destination_column == (origin_column + 1)) || (destination_column == origin_column - 1);
