@@ -54,6 +54,7 @@ public class FoxHoundGame {
         boolean exit = false;
         while(!exit) {
             System.out.println(Arrays.toString(players));
+            FoxHoundUtils.heh(players,dim);
             System.out.println("\n#################################");
             FoxHoundUI.displayBoard(players, dim);
             int choice = FoxHoundUI.mainMenuQuery(turn, STDIN_SCAN);

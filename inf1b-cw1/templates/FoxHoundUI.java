@@ -20,28 +20,8 @@ public class FoxHoundUI {
     public static final int MENU_MOVE = 1;
     /** Menu entry to terminate the program. */
     public static final int MENU_EXIT = 2;
-
     public static void displayBoard(String[] players, int dimension) {
-        char board[][] = new char[dimension][dimension];
-        int k = 0;
-        for(int i = 0;i<dimension;i++)
-        {
-            for(int j = 0;j<dimension;j++)
-            {
-                    if (k < players.length-1 && (i == row(players[k]) && j == column(players[k])))
-                    {
-                        board[i][j] = FoxHoundUtils.HOUND_FIELD;
-                        k++;
-                    }
-                    else if ((k == players.length-1 && (i == row(players[k]) && j == column(players[k]))))
-                    {
-                        board[i][j] = FoxHoundUtils.FOX_FIELD;
-                        k++;
-                    } 
-                    else 
-                        board[i][j] = FoxHoundUtils.EMPTY_FIELD;
-            }
-        }
+        char board[][] = boardArray(players, dimension);
         System.out.print("  ");
         for(int i = 0;i<board.length;i++)
         {
@@ -66,6 +46,30 @@ public class FoxHoundUI {
             System.out.print((char)(65+i));
         }
         System.out.println();
+    }
+    public static char[][] boardArray(String[] players,int dimension)
+    {
+        char [][] board= new char[dimension][dimension];
+        int k = 0;
+        for(int i = 0;i<dimension;i++)
+        {
+            for(int j = 0;j<dimension;j++)
+            {
+                    if (k < players.length-1 && (i == row(players[k]) && j == column(players[k])))
+                    {
+                        board[i][j] = FoxHoundUtils.HOUND_FIELD;
+                        k++;
+                    }
+                    else if ((k == players.length-1 && (i == row(players[k]) && j == column(players[k]))))
+                    {
+                        board[i][j] = FoxHoundUtils.FOX_FIELD;
+                        k++;
+                    } 
+                    else 
+                        board[i][j] = FoxHoundUtils.EMPTY_FIELD;
+            }
+        }
+        return board;
     }
     public static int row(String s)
     {

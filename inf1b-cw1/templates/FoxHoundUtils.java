@@ -123,14 +123,21 @@ public class FoxHoundUtils {
         }
         return g;
     }
+
     public static boolean isFoxWin(String fox_pos)
     {
-        int row = Integer.parseInt(fox_pos.substring(1)) - 1;
-        return row == 0;
+        return FoxHoundUI.row(fox_pos) == 0;
     }
     public static boolean isHoundWin(String[] players,int dimension)
     {
-        boolean d = false;
-        return d;
+        int fr = FoxHoundUI.row(players[players.length-1]);
+        int fc = FoxHoundUI.column(players[players.length-1].substring(1));
+        char board[][] = FoxHoundUI(players,dimension);
+        boolean g = false;
+        if(fc == 0)
+            g = g && (board[fr+1][fc] == 'H' && board[fr][fc+1] == 'H' && board[fr-1][fc] == 'H');
+        else
+            g = g && (board[fr+1][fc] == 'H' && board[fr][fc+1] == 'H' && board[fr][fc-1] == 'H' && board[fr-1][fc] == 'H');
+        return g;
     }
 }
