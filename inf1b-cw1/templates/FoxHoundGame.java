@@ -54,7 +54,6 @@ public class FoxHoundGame {
         boolean exit = false;
         while(!exit) {
             System.out.println(Arrays.toString(players));
-            FoxHoundUtils.heh(players,dim);
             System.out.println("\n#################################");
             FoxHoundUI.displayBoard(players, dim);
             int choice = FoxHoundUI.mainMenuQuery(turn, STDIN_SCAN);
@@ -63,6 +62,8 @@ public class FoxHoundGame {
             switch(choice) {
                 case FoxHoundUI.MENU_MOVE:
                     boolean g = false;
+                    // boolean fw = false;
+                    // boolean hw = false;
                     int c = 0;
                     String[] k;
                     do
@@ -70,13 +71,28 @@ public class FoxHoundGame {
                         if (c>0)
                             System.out.println("invalid input");
                         k = FoxHoundUI.positioinQuery(dim, STDIN_SCAN);
+                        // if(FoxHoundUtils.isFoxWin(k[0]) && turn == 'F')
+                        // {
+                        //     System.out.println("Fox has won");
+                        //     fw = true;
+                        //     break;
+                        // }
+                        // else if(FoxHoundUtils.isHoundWin(players,dim) && turn == 'H')
+                        // {
+                        //     System.out.println("Hound has won");
+                        //     hw = true;
+                        //     break;
+                        // }
                         g = FoxHoundUtils.isValidMove(dim, players, turn, k[0], k[1]);
                         c++;
-                    }while(!g);                    
-                    int d = find(players,k[0]);
-                    players[d] = k[1];
-                    turn = swapPlayers(turn);
-                    System.out.println(Arrays.toString(players));
+                    }while(!g);   
+                    // if(!(fw || hw))
+                    // {
+                        int d = find(players,k[0]);
+                        players[d] = k[1];
+                        turn = swapPlayers(turn);
+                        System.out.println(Arrays.toString(players));  
+                    // }                 
                     break;
                 case FoxHoundUI.MENU_EXIT:
                     exit = true;

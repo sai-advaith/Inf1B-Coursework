@@ -50,6 +50,7 @@ public class FoxHoundUI {
     public static char[][] boardArray(String[] players,int dimension)
     {
         char [][] board= new char[dimension][dimension];
+        System.out.println(Arrays.toString(players));
         int k = 0;
         for(int i = 0;i<dimension;i++)
         {
