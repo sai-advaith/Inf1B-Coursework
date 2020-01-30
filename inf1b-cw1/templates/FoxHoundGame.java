@@ -62,8 +62,8 @@ public class FoxHoundGame {
             switch(choice) {
                 case FoxHoundUI.MENU_MOVE:
                     boolean g = false;
-                    // boolean fw = false;
-                    // boolean hw = false;
+                    boolean fw = false;
+                    boolean hw = false;
                     int c = 0;
                     String[] k;
                     do
@@ -71,28 +71,28 @@ public class FoxHoundGame {
                         if (c>0)
                             System.out.println("invalid input");
                         k = FoxHoundUI.positioinQuery(dim, STDIN_SCAN);
-                        // if(FoxHoundUtils.isFoxWin(k[0]) && turn == 'F')
-                        // {
-                        //     System.out.println("Fox has won");
-                        //     fw = true;
-                        //     break;
-                        // }
-                        // else if(FoxHoundUtils.isHoundWin(players,dim) && turn == 'H')
-                        // {
-                        //     System.out.println("Hound has won");
-                        //     hw = true;
-                        //     break;
-                        // }
+                        if(FoxHoundUtils.isFoxWin(k[0]) && turn == 'F')
+                        {
+                            System.out.println("Fox has won");
+                            fw = true;
+                            break;
+                        }
+                        else if(FoxHoundUtils.isHoundWin(players,dim) && turn == 'H')
+                        {
+                            System.out.println("Hound has won");
+                            hw = true;
+                            break;
+                        }
                         g = FoxHoundUtils.isValidMove(dim, players, turn, k[0], k[1]);
                         c++;
                     }while(!g);   
-                    // if(!(fw || hw))
-                    // {
+                    if(!(fw || hw))
+                    {
                         int d = find(players,k[0]);
                         players[d] = k[1];
                         turn = swapPlayers(turn);
                         System.out.println(Arrays.toString(players));  
-                    // }                 
+                    }                 
                     break;
                 case FoxHoundUI.MENU_EXIT:
                     exit = true;
@@ -130,12 +130,12 @@ public class FoxHoundGame {
     public static void main(String[] args) {
 
         int dimension = FoxHoundUtils.DEFAULT_DIM;
-        String[] players = {"A2","D1","F1","H1","F7"};
+        String[] players = FoxHoundUtils.initialisePositions(dimension);
         // System.out.println(Arrays.toString(players));
         // System.out.println(FoxHoundUtils.isValidMove(8, players, 'H', "H1", "G2"));
         FoxHoundUI.displayBoard(players,dimension);
         // System.out.println(Arrays.toString(players));
-        // gameLoop(dimension, players);
+        gameLoop(dimension, players);
         // FoxHoundUI.positioinQuery(8, STDIN_SCAN);
         // Close the scanner reading the standard input stream       
         STDIN_SCAN.close();

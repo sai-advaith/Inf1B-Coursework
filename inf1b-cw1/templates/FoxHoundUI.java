@@ -22,71 +22,55 @@ public class FoxHoundUI {
     public static final int MENU_EXIT = 2;
     public static void displayBoard(String[] players, int dimension) {
         char board[][] = boardArray(players, dimension);
+        System.out.print("  ");
         for(int i = 0;i<board.length;i++)
         {
+            System.out.print((char)(65+i));
+        }
+        System.out.println();
+        for(int i = 0;i<board.length;i++)
+        {
+            System.out.print((i+1));
+            System.out.print(' ');
             for(int j = 0;j<board.length;j++)
             {
                 System.out.print(board[i][j]);
             }
+            System.out.print(' ');
+            System.out.print(1+i);
             System.out.println();
         }
-        // for(int i = 0;i<board.length;i++)
-        // {
-        //     System.out.print((char)(65+i));
-        // }
-        // System.out.println();
-        // for(int i = 0;i<board.length;i++)
-        // {
-        //     System.out.print((i+1));
-        //     System.out.print(' ');
-        //     for(int j = 0;j<board.length;j++)
-        //     {
-        //         System.out.print(board[i][j]);
-        //     }
-        //     System.out.print(' ');
-        //     System.out.print(1+i);
-        //     System.out.println();
-        // }
-        // System.out.print("  ");
-        // for(int i = 0;i<board.length;i++)
-        // {
-        //     System.out.print((char)(65+i));
-        // }
-        // System.out.println();
+        System.out.print("  ");
+        for(int i = 0;i<board.length;i++)
+        {
+            System.out.print((char)(65+i));
+        }
+        System.out.println();
     }
     public static char[][] boardArray(String[] players,int dimension)
     {
         char [][] board = new char[dimension][dimension];
         System.out.println(Arrays.toString(players));
-        int k = 0;
-        for(int i = 0;i<dimension;i++)
+        for(int i = 0;i<players.length;i++)
         {
-            for(int j = 0;j<dimension;j++)
+            int r = row(players[i]);
+            int c = column(players[i]);
+            if (i == players.length-1)
+                board[r][c] = FoxHoundUtils.FOX_FIELD;
+            else
+                board[r][c] = FoxHoundUtils.HOUND_FIELD;
+        }
+        for(int  i = 0;i<board.length;i++)
+        {
+            for(int  j = 0;j<board.length;j++)
             {
-                if(k<players.length)
-                {
-                    System.out.print(row(players[k]) +" "+column(players[k])+" "+ k+" "+i+" "+j);
-                }
-                System.out.println();
-                    if (k < players.length-1 && (i == row(players[k]) && j == column(players[k])))
-                    {
-                        board[i][j] = FoxHoundUtils.HOUND_FIELD;
-                        k++;
-                    }
-                    else if ((k == players.length-1 && (i == row(players[k]) && j == column(players[k]))))
-                    {
-                        board[i][j] = FoxHoundUtils.FOX_FIELD;
-                        k++;
-                    } 
-                    else 
-                    {
-                        board[i][j] = FoxHoundUtils.EMPTY_FIELD;
-                    }
+                if (board[i][j] == '\u0000')
+                    board[i][j] = FoxHoundUtils.EMPTY_FIELD;
             }
         }
         return board;
     }
-// if not the last element, then
+// for loop through and simply replace the element with the 
     public static int row(String s)
     {
         return (Integer.parseInt(s.substring(1))-1);
