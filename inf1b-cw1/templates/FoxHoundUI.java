@@ -56,18 +56,25 @@ public class FoxHoundUI {
         {
             for(int j = 0;j<dimension;j++)
             {
+                System.out.println(i+" "+j);
+                System.out.println(k);
                     if (k < players.length-1 && (i == row(players[k]) && j == column(players[k])))
                     {
                         board[i][j] = FoxHoundUtils.HOUND_FIELD;
+                        System.out.print(board[i][j]);
                         k++;
                     }
                     else if ((k == players.length-1 && (i == row(players[k]) && j == column(players[k]))))
                     {
                         board[i][j] = FoxHoundUtils.FOX_FIELD;
+                        System.out.print(board[i][j]);
                         k++;
                     } 
                     else 
+                    {
                         board[i][j] = FoxHoundUtils.EMPTY_FIELD;
+                        System.out.print(board[i][j]);
+                    }
             }
         }
         return board;
