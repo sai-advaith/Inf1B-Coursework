@@ -130,12 +130,12 @@ public class FoxHoundGame {
     public static void main(String[] args) {
 
         int dimension = FoxHoundUtils.DEFAULT_DIM;
-        String[] players = FoxHoundUtils.initialisePositions(dimension);
+        String[] players = {"A2","D1","F1","H1","F7"};
         // System.out.println(Arrays.toString(players));
         // System.out.println(FoxHoundUtils.isValidMove(8, players, 'H', "H1", "G2"));
-        // FoxHoundUI.displayBoard(players,dimension);
+        FoxHoundUI.displayBoard(players,dimension);
         // System.out.println(Arrays.toString(players));
-        gameLoop(dimension, players);
+        // gameLoop(dimension, players);
         // FoxHoundUI.positioinQuery(8, STDIN_SCAN);
         // Close the scanner reading the standard input stream       
         STDIN_SCAN.close();
