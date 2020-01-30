@@ -130,8 +130,6 @@ public class FoxHoundUtils {
     {
         int fr = FoxHoundUI.row(players[players.length-1]);
         int fc = FoxHoundUI.column(players[players.length-1]);
-        System.out.println(fr);
-        System.out.println(fc);
         char board[][] = FoxHoundUI.boardArray(players,dimension);
         if(fc == 0)
             return (board[fr+1][fc] == 'H' && board[fr][fc+1] == 'H' && board[fr-1][fc] == 'H');
