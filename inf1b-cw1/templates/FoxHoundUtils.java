@@ -123,4 +123,14 @@ public class FoxHoundUtils {
         }
         return g;
     }
+    public static boolean isFoxWin(String fox_pos)
+    {
+        int row = Integer.parseInt(fox_pos.substring(1)) - 1;
+        return row == 0;
+    }
+    public static boolean isHoundWin(String[] players,int dimension)
+    {
+        boolean d = false;
+        return d;
+    }
 }
