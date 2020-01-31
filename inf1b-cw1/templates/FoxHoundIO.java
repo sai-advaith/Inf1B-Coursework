@@ -1,3 +1,5 @@
+import java.nio.file.Path;
+
 /**
  * A utility class for the fox hound program.
  * 
@@ -7,4 +9,7 @@
 public class FoxHoundIO {
 
 
+    public static char loadGame(String[] players, Path input) {
+        return '\u0000';
+    }
 }
