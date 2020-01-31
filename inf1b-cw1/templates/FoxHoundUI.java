@@ -14,12 +14,14 @@ public class FoxHoundUI {
     private static final int MENU_ENTRIES = 2;
     /** Main menu display string. */
     private static final String MAIN_MENU =
-        "\n1. Move\n2. Exit\n\nEnter 1 - 2:";
+        "\n1. Move\n2. Save Game\n3. Load Game\n4. Exit \n\nEnter 1-4:";
 
     /** Menu entry to select a move action. */
     public static final int MENU_MOVE = 1;
     /** Menu entry to terminate the program. */
-    public static final int MENU_EXIT = 2;
+    public static final int SAVE_MOVE = 2;
+    public static final int LOAD_MOVE = 3;
+    public static final int MENU_EXIT = 4;
     public static void displayBoard(String[] players, int dimension) {
         char board[][] = boardArray(players, dimension);
         System.out.print("  ");
@@ -166,6 +168,14 @@ public class FoxHoundUI {
             g = true;
         }while(!g);
         return str;
+    }
+    public static Path fileQuery(Scanner stdIn)
+    {
+        Objects.requireNonNull(stdin, "Given Scanner must not be null");
+        System.out.println("Enter File Path");
+        String inFile = stdIn.next();
+        Path p = Paths.get(inFile);
+        return p;
     }
 }
 

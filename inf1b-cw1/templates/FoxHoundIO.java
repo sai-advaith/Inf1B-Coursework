@@ -6,8 +6,11 @@ import java.nio.file.Path;
  * It contains helper functions for all file input / output
  * related operations such as saving and loading a game.
  */
+import java.nio.file.Files;
+import java.nio.file.*;
 import java.io.*;
-import java.nio.*;
+import java.lang.Object;
+import java.util.*;
 public class FoxHoundIO {
 
 
@@ -16,16 +19,16 @@ public class FoxHoundIO {
         boolean g = true;
 
         if(players == null)
-            throw new NullPointerException("Null players array");
+            throw new NullPointerException("ERROR: Saving file failed.");
 
         if (turn != FoxHoundUtils.HOUND_FIELD && turn != FoxHoundUtils.FOX_FIELD)
-            throw new IllegalArgumentException("Illegal turn argument");
+            throw new IllegalArgumentException("ERROR: Saving file failed.");
 
         else if (PATH == null)
-            throw new NullPointerException("Null path");
+            throw new NullPointerException("ERROR: Saving file failed.");
 
         StringBuilder str = new StringBuilder(turn + " ");
-        
+
         for(int  i = 0;i<players.length;i++)
         {
             str = str.append(players[i] + " ");
@@ -43,7 +46,6 @@ public class FoxHoundIO {
             byte[] bytesArray = (str.toString()).getBytes();
             fStream.write(bytesArray);
             fStream.flush();
-            System.out.println("File has been saved");
         }
         catch(IOException e)
         {
@@ -57,9 +59,67 @@ public class FoxHoundIO {
             }
             catch(IOException e)
             {
-                System.out.println("Cannot close the Stream");
+                System.out.println("ERROR: Saving file failed.");
             }
         }
         return g;
+    }
+    public static char loadGame(String[] players, Path PATH) throws IOException
+    {
+        File f = new File(PATH.toUri());
+        char c = '\u0000';
+
+        if(!f.exists())
+        {
+            System.out.println("e");
+            return '*';
+        }
+        try
+        {
+            byte[] encode;
+            String str;
+            String[] words;
+            encode = Files.readAllBytes(PATH);
+            str = new String(encode);
+            words = str.split(" ",0);
+            String d = words[0];
+            if (!(d.equals("H") || words[0].equals("F")))
+                return '*';
+            boolean g = false;
+            for(int i = 1;i<words.length;i++)
+            {
+                if (!(isValidPosition(words[i])))
+                {
+                    g = true;
+                    break;
+                }
+            }
+            if (g)
+                return '*';
+            else
+            {
+                if (d.equals("H"))
+                    c = 'F';
+                else
+                    c = 'H';
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("ERROR: Loading from file failed.");
+        }
+        return c;    
+    }
+    public static boolean isValidPosition(String pos)
+    {
+        if(Character.isLetter(pos.charAt(0)) && (Character.isDigit(pos.charAt(1))))
+        {
+            if (FoxHoundUI.row(pos) > 7 || FoxHoundUI.column(pos) > 7)  
+                return false;
+            else
+                return true;
+        }
+        else
+            return false;
     }
 }

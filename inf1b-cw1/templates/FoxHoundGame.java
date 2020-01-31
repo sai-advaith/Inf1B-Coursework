@@ -92,6 +92,14 @@ public class FoxHoundGame {
                         System.out.println(Arrays.toString(players));  
         
                     break;
+                case FoxHoundUI.SAVE_MOVE:
+                    Path p = FoxHOundUI.fileQuery(STDIN_SCAN);
+                    FoxHoundIO.saveGame(players,turn,p);
+                    break;
+                case FoxHoundUI.LOAD_MOVE:
+                    Path p1 = FoxHOundUI.fileQuery(STDIN_SCAN);
+                    FoxHoundIO.loadGame(players,p1);
+                    break;
                 case FoxHoundUI.MENU_EXIT:
                     exit = true;
                     break;
@@ -137,8 +145,8 @@ public class FoxHoundGame {
         // gameLoop(dimension, players);
         // FoxHoundUI.positioinQuery(8, STDIN_SCAN);
         // Close the scanner reading the standard input stream
-		Path p1 = Paths.get("inf1b-cw1/FoxHoundSave.txt");
-        FoxHoundIO.saveGame(players, 'H', p1);     
+		Path p1 = Paths.get("/afs/inf.ed.ac.uk/user/s19/s1904223/Inf1B-Coursework/inf1b-cw1/data/invalidGame06.txt");
+        System.out.println(FoxHoundIO.loadGame(players, p1));     
         STDIN_SCAN.close();
     }
 }
