@@ -6,8 +6,9 @@ import java.util.Scanner;
  * It contains the main game loop where main menu interactions
  * are processed and handler functions are called.
   */
-import java.util.*;
-
+  import java.nio.file.*;
+  import java.io.*;
+  import java.util.*;
 public class FoxHoundGame {
 
     /** 
@@ -124,7 +125,7 @@ public class FoxHoundGame {
      * @param args contain the command line arguments where the first can be
      * board dimensions.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         // int dimension = FoxHoundUtils.DEFAULT_DIM;
         int dimension = 5;
@@ -133,9 +134,11 @@ public class FoxHoundGame {
         // System.out.println(FoxHoundUtils.isValidMove(8, players, 'H', "H1", "G2"));
         // FoxHoundUI.displayBoard(players,dimension);
         // System.out.println(Arrays.toString(players));
-        gameLoop(dimension, players);
+        // gameLoop(dimension, players);
         // FoxHoundUI.positioinQuery(8, STDIN_SCAN);
-        // Close the scanner reading the standard input stream       
+        // Close the scanner reading the standard input stream
+		Path p1 = Paths.get("inf1b-cw1/FoxHoundSave.txt");
+        FoxHoundIO.saveGame(players, 'H', p1);     
         STDIN_SCAN.close();
     }
 }
