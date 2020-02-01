@@ -14,12 +14,14 @@ import java.util.*;
 public class FoxHoundIO {
 
 
-    public static boolean saveGame(String[] players, char turn, Path PATH) throws IOException
+    public static boolean saveGame(String[] players, char turn, Path PATH) throws NullPointerException, IllegalArgumentException
     {   
         boolean g = true;
 
         if(players == null)
             throw new NullPointerException();
+        if(players.length != 5)
+            throw new IllegalArgumentException();
 
         if (turn != FoxHoundUtils.HOUND_FIELD && turn != FoxHoundUtils.FOX_FIELD)
             throw new IllegalArgumentException();
@@ -46,25 +48,27 @@ public class FoxHoundIO {
                 bw.write(str.toString());
                 bw.close();
             }
-                
+
             // System.out.println(file.isFile());
             // System.out.println(file.isDirectory());
         }
         catch(IOException e)
         {
-            e.printStackTrace();;
+            return false;
         }
         return g;
     }
-    public static char loadGame(String[] players, Path PATH) throws IOException
+    public static char loadGame(String[] players, Path PATH) throws IllegalArgumentException
     {
+        if(players.length != 5)
+            throw new IllegalArgumentException();
         File f = new File(PATH.toUri());
         char c = '\u0000';
 
         if(!f.exists())
         {
-            System.out.println("e");
-            return '*';
+            // System.out.println("e");
+            return '#';
         }
         try
         {
@@ -75,6 +79,7 @@ public class FoxHoundIO {
             str = new String(encode);
             words = str.split(" ",0);
             String d = words[0];
+            String[] cop = new String[words.length - 1];
             if (!(d.equals("H") || words[0].equals("F")))
                 return '#';
             boolean g = false;
@@ -86,6 +91,15 @@ public class FoxHoundIO {
                     break;
                 }
             }
+            int  j = 0;
+            for(int i = 1;i < words.length;i++)
+            {
+                cop[j] = words[i];
+                j ++;
+            }
+            for(int i = 0;i<cop.length;i++)
+                players[i] = cop[i];
+            System.out.println(Arrays.toString(players));
             if (g)
                 return '#';
             else

@@ -48,7 +48,7 @@ public class FoxHoundGame {
      * @param dim the dimension of the game board
      * @param players current position of all figures on the board in board coordinates
      */
-    private static void gameLoop(int dim, String[] players) throws IOException{
+    private static void gameLoop(int dim, String[] players) {
 
         // start each game with the Fox
         char turn = FoxHoundUtils.FOX_FIELD;
@@ -81,7 +81,7 @@ public class FoxHoundGame {
                             System.out.println("Hound has won");
                             System.exit(0);
                         }
-                        k = FoxHoundUI.positioinQuery(dim, STDIN_SCAN);
+                        k = FoxHoundUI.positionQuery(dim, STDIN_SCAN);
                         g = FoxHoundUtils.isValidMove(dim, players, turn, k[0], k[1]);
                         c++;
                     }while(!g);   
@@ -93,29 +93,15 @@ public class FoxHoundGame {
                     break;
                 case FoxHoundUI.SAVE_MOVE:
                     Path p = FoxHoundUI.fileQuery(STDIN_SCAN);
-                    try
-                    {
-                        boolean b = FoxHoundIO.saveGame(players,turn,p);
-                        if (!(b))
-                            System.err.println("ERROR: Saving file failed.");
-                    }
-                    catch(IOException e)
-                    {
+                    boolean b = FoxHoundIO.saveGame(players,turn,p);
+                    if (!(b))
                         System.err.println("ERROR: Saving file failed.");
-                    }
                     break;
                 case FoxHoundUI.LOAD_MOVE:
                     Path p1 = FoxHoundUI.fileQuery(STDIN_SCAN);
-                    try
-                    {
-                        char ch = FoxHoundIO.loadGame(players,p1);
-                        if (ch == '#')
-                            System.err.println("ERROR: Loading from file failed.");
-                    }
-                    catch(IOException e)
-                    {
-                        System.err.println("ERROR: Saving file failed.");
-                    }
+                    char ch = FoxHoundIO.loadGame(players,p1);
+                    if (ch == '#')
+                        System.err.println("ERROR: Loading from file failed.");
                     break;
                 case FoxHoundUI.MENU_EXIT:
                     exit = true;
@@ -159,10 +145,11 @@ public class FoxHoundGame {
         // FoxHoundUI.displayBoard(players,dimension);
         // System.out.println(Arrays.toString(players));
         gameLoop(dimension, players);
-        // FoxHoundUI.positioinQuery(8, STDIN_SCAN);
+        // FoxHoundUI.positionQuery(8, STDIN_SCAN);
         // Close the scanner reading the standard input stream
 		// Path p1 = Paths.get("/afs/inf.ed.ac.uk/user/s19/s1904223/Inf1B-Coursework/inf1b-cw1/data/invalidGame06.txt");
-        // System.out.println(FoxHoundIO.loadGame(players, p1));     
+        // System.out.println(FoxHoundIO.loadGame(players, p1));
+
         STDIN_SCAN.close();
     }
 }

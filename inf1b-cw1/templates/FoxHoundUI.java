@@ -26,35 +26,39 @@ public class FoxHoundUI {
     public static final int MENU_EXIT = 4;
     public static void displayBoard(String[] players, int dimension) {
         char board[][] = boardArray(players, dimension);
-        System.out.print("  ");
+        StringBuilder str = new StringBuilder();
+        str.append("  ");
         for(int i = 0;i<board.length;i++)
         {
-            System.out.print((char)(65+i));
+            str.append((char)(65+i));
         }
-        System.out.println();
+        str.append("  ");
+        str.append("\n");
+        str.append("\n");
         for(int i = 0;i<board.length;i++)
         {
-            System.out.print((i+1));
-            System.out.print(' ');
+            str.append((i+1));
+            str.append(' ');
             for(int j = 0;j<board.length;j++)
             {
-                System.out.print(board[i][j]);
+                str.append(board[i][j]);
             }
-            System.out.print(' ');
-            System.out.print(1+i);
-            System.out.println();
+            str.append(' ');
+            str.append(1+i);
+            str.append("\n");
         }
-        System.out.print("  ");
+        str.append("\n");
+        str.append("  ");
         for(int i = 0;i<board.length;i++)
         {
-            System.out.print((char)(65+i));
+            str.append((char)(65+i));
         }
-        System.out.println();
+        str.append("  ");
+        System.out.println(str.toString());
     }
     public static char[][] boardArray(String[] players,int dimension)
     {
         char [][] board = new char[dimension][dimension];
-        System.out.println(Arrays.toString(players));
         for(int i = 0;i<players.length;i++)
         {
             int r = row(players[i]);
@@ -124,29 +128,40 @@ public class FoxHoundUI {
 
         return input;
     }
-    public static String[] positioinQuery(int dimension, Scanner stdIn)
+    public static String[] positionQuery(int dimension, Scanner stdIn)
     {
         String[] str = new String[2];
         boolean g = true;
         
         do
         {
-            System.out.println("Provide origin and destination coordinates");
+            System.out.println("Provide origin and destination coordinates.");
             if (stdIn == null)
             {
                 g = false;
-                System.out.println("ERROR: Please enter valid coordinate pair separated by space.");
+                System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
                 continue;
             }
             else if(dimension > FoxHoundUtils.MAX_DIM || dimension < FoxHoundUtils.MIN_DIM)
             {
                 g = false;
-                System.out.println("ERROR: Please enter valid coordinate pair separated by space.");
+                System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
                 continue;
             }
-            System.out.println("Enter two positions between A1-H8");
-            String a = stdIn.next();
-            String b = stdIn.next();
+            System.out.println("Enter two positions between A1-H8:\n");
+            String t = stdIn.nextLine();
+            int j = 0;
+            StringBuilder a = new StringBuilder();
+            StringBuilder b = new StringBuilder();
+            for(int i =0;i<t.length();i++)
+            {
+                if(t.charAt(i) == ' ')
+                {
+                    a.append(t.substring(j,i));
+                    j = i+1;
+                }
+            }
+            b.append(t.substring(j,t.length()));
             int c = 0;
             char row = a.charAt(0);
             char max = (char)(64+dimension);
@@ -156,17 +171,17 @@ public class FoxHoundUI {
             catch(NumberFormatException e)
             {
                 g = false;
-                System.out.println("ERROR: Please enter valid coordinate pair separated by space.");
+                System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
                 continue;
             }
             if(row>max || c>dimension)
             {
                 g = false;
-                System.out.println("ERROR: Please enter valid coordinate pair separated by space.");
+                System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
                 continue;
             }
-            str[0] = a;
-            str[1] = b;
+            str[0] = a.toString();
+            str[1] = b.toString();
             g = true;
         }while(!g);
         return str;
@@ -174,7 +189,7 @@ public class FoxHoundUI {
     public static Path fileQuery(Scanner stdIn)
     {
         Objects.requireNonNull(stdIn, "Given Scanner must not be null");
-        System.out.println("Enter File Path");
+        System.out.println("Enter file path:");
         return Paths.get(stdIn.next());
     }
 }
