@@ -1,6 +1,8 @@
 
 import javax.lang.model.util.ElementScanner6;
 
+import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.*;
 /**
  * A utility class for the fox hound program.
@@ -11,7 +13,7 @@ import java.util.*;
 public class FoxHoundUI {
 
     /** Number of main menu entries. */
-    private static final int MENU_ENTRIES = 2;
+    private static final int MENU_ENTRIES = 4;
     /** Main menu display string. */
     private static final String MAIN_MENU =
         "\n1. Move\n2. Save Game\n3. Load Game\n4. Exit \n\nEnter 1-4:";
@@ -171,11 +173,9 @@ public class FoxHoundUI {
     }
     public static Path fileQuery(Scanner stdIn)
     {
-        Objects.requireNonNull(stdin, "Given Scanner must not be null");
+        Objects.requireNonNull(stdIn, "Given Scanner must not be null");
         System.out.println("Enter File Path");
-        String inFile = stdIn.next();
-        Path p = Paths.get(inFile);
-        return p;
+        return Paths.get(stdIn.next());
     }
 }
 

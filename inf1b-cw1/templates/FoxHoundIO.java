@@ -19,13 +19,13 @@ public class FoxHoundIO {
         boolean g = true;
 
         if(players == null)
-            throw new NullPointerException("ERROR: Saving file failed.");
+            throw new NullPointerException();
 
         if (turn != FoxHoundUtils.HOUND_FIELD && turn != FoxHoundUtils.FOX_FIELD)
-            throw new IllegalArgumentException("ERROR: Saving file failed.");
+            throw new IllegalArgumentException();
 
         else if (PATH == null)
-            throw new NullPointerException("ERROR: Saving file failed.");
+            throw new NullPointerException();
 
         StringBuilder str = new StringBuilder(turn + " ");
 
@@ -33,34 +33,26 @@ public class FoxHoundIO {
         {
             str = str.append(players[i] + " ");
         }
-        FileOutputStream fStream = null;
         File file;
         try
         {
             file = new File(PATH.toUri());
-            fStream = new FileOutputStream(file);
-            if(!file.exists())
-                file.createNewFile();
-            else
+            if (file.exists())
                 g = false;
-            byte[] bytesArray = (str.toString()).getBytes();
-            fStream.write(bytesArray);
-            fStream.flush();
+            else
+            {
+                FileWriter fw = new FileWriter(file);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write(str.toString());
+                bw.close();
+            }
+                
+            // System.out.println(file.isFile());
+            // System.out.println(file.isDirectory());
         }
         catch(IOException e)
         {
             e.printStackTrace();;
-        }
-        finally{
-            try
-            {
-                if(fStream != null)
-                    fStream.close();
-            }
-            catch(IOException e)
-            {
-                System.out.println("ERROR: Saving file failed.");
-            }
         }
         return g;
     }
@@ -84,7 +76,7 @@ public class FoxHoundIO {
             words = str.split(" ",0);
             String d = words[0];
             if (!(d.equals("H") || words[0].equals("F")))
-                return '*';
+                return '#';
             boolean g = false;
             for(int i = 1;i<words.length;i++)
             {
@@ -95,13 +87,13 @@ public class FoxHoundIO {
                 }
             }
             if (g)
-                return '*';
+                return '#';
             else
             {
                 if (d.equals("H"))
-                    c = 'F';
+                    c = FoxHoundUtils.FOX_FIELD;
                 else
-                    c = 'H';
+                    c = FoxHoundUtils.HOUND_FIELD;
             }
         }
         catch(IOException e)
