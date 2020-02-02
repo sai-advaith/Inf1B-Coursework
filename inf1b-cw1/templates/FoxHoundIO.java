@@ -66,10 +66,7 @@ public class FoxHoundIO {
         char c = '\u0000';
 
         if(!f.exists())
-        {
-            // System.out.println("e");
             return '#';
-        }
         try
         {
             byte[] encode;
@@ -105,9 +102,9 @@ public class FoxHoundIO {
             else
             {
                 if (d.equals("H"))
-                    c = FoxHoundUtils.FOX_FIELD;
-                else
                     c = FoxHoundUtils.HOUND_FIELD;
+                else
+                    c = FoxHoundUtils.FOX_FIELD;
             }
         }
         catch(IOException e)

@@ -71,6 +71,7 @@ public class FoxHoundUtils {
             switch(figure)
             {
                 case HOUND_FIELD:
+                    hound_validity = hound_validity && !(origin.equals(players[players.length-1]));
                     hound_validity = hound_validity && (FoxHoundUtils.occupancy(players,destination));
                     hound_validity = hound_validity && (origin_row == destination_row - 1);
                     if (origin_column == (dim - 1))
@@ -84,6 +85,7 @@ public class FoxHoundUtils {
                     }
                     return hound_validity;
                 case FOX_FIELD:
+                    fox_validity = fox_validity && origin.equals(players[players.length-1]);
                     fox_validity = fox_validity && (FoxHoundUtils.occupancy(players,destination));
                     if(origin_row == (dim - 1))
                     {
@@ -126,18 +128,26 @@ public class FoxHoundUtils {
     {
         return FoxHoundUI.row(fox_pos) == 0;
     }
-    public static boolean isHoundWin(String[] players,int dimension)
+    public static boolean isHoundWin(String[] players,int dimension) throws IllegalArgumentException
     {
-        int fr = FoxHoundUI.row(players[players.length-1]);
-        int fc = FoxHoundUI.column(players[players.length-1]);
-        char board[][] = FoxHoundUI.boardArray(players,dimension);
-        if(fc == 0)
-            return (board[fr+1][fc] == 'H' && board[fr][fc+1] == 'H' && board[fr-1][fc] == 'H');
-        else if (fc == dimension - 1)
-            return (board[fr+1][fc] == 'H' && board[fr-1][fc] == 'H' && board[fr][fc-1] == 'H');
-        else if(fr == dimension-1)
-            return (board[fr-1][fc] == 'H' && board[fr][fc+1] == 'H' && board[fr][fc-1] == 'H');
-        else
-            return (board[fr+1][fc] == 'H' && board[fr][fc+1] == 'H' && board[fr][fc-1] == 'H' && board[fr-1][fc] == 'H');
+            if (dimension >= MIN_DIM && dimension <= MAX_DIM) {
+                int fr = FoxHoundUI.row(players[players.length-1]);
+                int fc = FoxHoundUI.column(players[players.length-1]);
+                char board[][] = FoxHoundUI.boardArray(players,dimension);
+                if(fc == 0 && fr != dimension - 1)
+                    return (board[fr+1][fc+1] == 'H' && board[fr-1][fc+1] == 'H');
+                else if (fc == dimension - 1 && fr != dimension - 1)
+                    return (board[fr+1][fc-1] == 'H' && board[fr-1][fc+1] == 'H');
+                else if(fr == dimension-1 && (fc != 0 && fc != dimension - 1))
+                    return (board[fr-1][fc-1] == 'H' && board[fr-1][fc+1] == 'H');
+                else if (fr == dimension-1 && fc == 0)
+                    return (board[fr-1][fc+1] == 'H');
+                else if (fr == dimension - 1 && fc == dimension - 1)
+                    return (board[fr-1][fc-1] == 'H');
+                else
+                    return (board[fr+1][fc+1] == 'H' && board[fr+1][fc-1] == 'H' && board[fr-1][fc+1] == 'H' && board[fr-1][fc-1] == 'H');
+            }
+            else
+                throw new IllegalArgumentException();
     }
 }
