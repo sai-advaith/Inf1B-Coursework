@@ -64,7 +64,6 @@ public class FoxHoundIO {
             throw new IllegalArgumentException();
         File f = new File(PATH.toUri());
         char c = '\u0000';
-
         if(!f.exists())
             return '#';
         try
@@ -88,15 +87,17 @@ public class FoxHoundIO {
                     break;
                 }
             }
-            int  j = 0;
-            for(int i = 1;i < words.length;i++)
+            if(!g)
             {
-                cop[j] = words[i];
-                j ++;
+                int  j = 0;
+                for(int i = 1;i < words.length;i++)
+                {
+                    cop[j] = words[i];
+                    j ++;
+                }
+                for(int i = 0;i<cop.length;i++)
+                    players[i] = cop[i];
             }
-            for(int i = 0;i<cop.length;i++)
-                players[i] = cop[i];
-            System.out.println(Arrays.toString(players));
             if (g)
                 return '#';
             else

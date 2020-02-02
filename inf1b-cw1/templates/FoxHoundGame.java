@@ -144,7 +144,12 @@ public class FoxHoundGame {
         // System.out.println(FoxHoundUtils.isValidMove(8, players, 'H', "H1", "G2"));
         // FoxHoundUI.displayBoard(players,dimension);
         // System.out.println(Arrays.toString(players));
-        gameLoop(dimension, players);
+        // String[] players = {"C2","D1","F1","H1","D7"};
+        Path input = Paths.get("invalidGame06.txt");
+        char fig  = 'F';
+        System.out.println(Arrays.toString(players));
+        System.out.println(FoxHoundIO.loadGame(players, input));
+        System.out.println(Arrays.toString(players));
         // FoxHoundUI.positionQuery(8, STDIN_SCAN);
         // Close the scanner reading the standard input stream
 		// Path p1 = Paths.get("/afs/inf.ed.ac.uk/user/s19/s1904223/Inf1B-Coursework/inf1b-cw1/data/invalidGame06.txt");
