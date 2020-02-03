@@ -26,7 +26,7 @@ public class FoxHoundUI {
     public static final int MENU_EXIT = 4;
     public static void displayBoard(String[] players, int dimension) {
         char board[][] = boardArray(players, dimension);
-        StringBuilder str = new StringBuilder();
+        StringBuilder str = new StringBuilder(); // using a string builder to create a string of the board 
         str.append("  ");
         for(int i = 0;i<board.length;i++)
         {
@@ -54,10 +54,11 @@ public class FoxHoundUI {
             str.append((char)(65+i));
         }
         str.append("  ");
-        System.out.println(str.toString());
+        // formatting the string based on the test cases. 
+        System.out.println(str.toString()); // printing the stringbuilder
     }
     public static char[][] boardArray(String[] players,int dimension)
-    {
+    { // creating a 2d array to store the positions of fox, hounds, and empty positions. 
         char [][] board = new char[dimension][dimension];
         for(int i = 0;i<players.length;i++)
         {
@@ -73,19 +74,19 @@ public class FoxHoundUI {
             for(int  j = 0;j<board.length;j++)
             {
                 if (board[i][j] == '\u0000')
-                    board[i][j] = FoxHoundUtils.EMPTY_FIELD;
+                    board[i][j] = FoxHoundUtils.EMPTY_FIELD; // since the default value after filling with fox hound is an empty character, we will replace it with the empty field
             }
-        }
-        return board;
+        } 
+        return board; // returning the board
     }
 // for loop through and simply replace the element with the 
     public static int row(String s)
     {
-        return (Integer.parseInt(s.substring(1))-1);
+        return (Integer.parseInt(s.substring(1))-1); // giving the row of a string position
     }
     public static int column(String s)
     {
-        int k = (int)(s.charAt(0)) - 65;
+        int k = (int)(s.charAt(0)) - 65; // column of a string position
         return k;
     }
     /**
@@ -190,7 +191,7 @@ public class FoxHoundUI {
     {
         Objects.requireNonNull(stdIn, "Given Scanner must not be null");
         System.out.println("Enter file path:");
-        return Paths.get(stdIn.next());
+        return Paths.get(stdIn.next()); // asking for file path as a string and giving it as a path object
     }
 }
 
