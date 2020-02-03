@@ -131,26 +131,26 @@ public class FoxHoundUI {
     }
     public static String[] positionQuery(int dimension, Scanner stdIn)
     {
-        String[] str = new String[2];
+        String[] str = new String[2]; //asking for positions which is then stores in the array
         boolean g = true;
         
         do
         {
             System.out.println("Provide origin and destination coordinates.");
             if (stdIn == null)
-            {
+            { // if our scanner object is null then throw an error
                 g = false;
                 System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
                 continue;
             }
             else if(dimension > FoxHoundUtils.MAX_DIM || dimension < FoxHoundUtils.MIN_DIM)
             {
-                g = false;
+                g = false; // if dimension invalid, throw and error
                 System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
                 continue;
             }
             System.out.println("Enter two positions between A1-H8:\n");
-            String t = stdIn.nextLine();
+            String t = stdIn.nextLine(); // reading the coordinates as one string and then splitting
             int j = 0;
             StringBuilder a = new StringBuilder();
             StringBuilder b = new StringBuilder();
@@ -159,33 +159,33 @@ public class FoxHoundUI {
                 if(t.charAt(i) == ' ')
                 {
                     a.append(t.substring(j,i));
-                    j = i+1;
+                    j = i+1; // appending to first string the first coordinate
                 }
             }
-            b.append(t.substring(j,t.length()));
+            b.append(t.substring(j,t.length())); // next coordinate to another string
             int c = 0;
             char row = a.charAt(0);
             char max = (char)(64+dimension);
             try{
-                c = Integer.parseInt(b.substring(1));
+                c = Integer.parseInt(b.substring(1)); // parsting to integer if valid, else exception. That is why its in a try block
             }
             catch(NumberFormatException e)
             {
                 g = false;
-                System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
+                System.err.println("ERROR: Please enter valid coordinate pair separated by space."); // if invalid, exception thrown
                 continue;
             }
             if(row>max || c>dimension)
             {
                 g = false;
                 System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
-                continue;
+                continue; // if the dimensions dont work then its an error
             }
             str[0] = a.toString();
-            str[1] = b.toString();
+            str[1] = b.toString(); // converting stringbuilder to string 
             g = true;
         }while(!g);
-        return str;
+        return str; //returning the string array
     }
     public static Path fileQuery(Scanner stdIn)
     {
