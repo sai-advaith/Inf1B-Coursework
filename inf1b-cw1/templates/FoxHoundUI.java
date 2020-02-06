@@ -20,27 +20,32 @@ public class FoxHoundUI {
 
     /** Menu entry to select a move action. */
     public static final int MENU_MOVE = 1;
-    /** Menu entry to terminate the program. */
+    /** Menu entry to save the game */
     public static final int SAVE_MOVE = 2;
+    /** Menu entry to load a game */
     public static final int LOAD_MOVE = 3;
+    /** Menu entry to terminate the program. */
     public static final int MENU_EXIT = 4;
+
+    /**
+     *
+     * @param players containing the positions of the pieces
+     * @param dimension dimension of the board
+     */
     public static void displayBoard(String[] players, int dimension) {
         char board[][] = boardArray(players, dimension);
-        StringBuilder str = new StringBuilder(); // using a string builder to create a string of the board 
+        StringBuilder str = new StringBuilder();
         str.append("  ");
-        for(int i = 0;i<board.length;i++)
-        {
+        for(int i = 0;i<board.length;i++) {
             str.append((char)(65+i));
         }
         str.append("  ");
         str.append("\n");
         str.append("\n");
-        for(int i = 0;i<board.length;i++)
-        {
+        for(int i = 0;i<board.length;i++) {
             str.append((i+1));
             str.append(' ');
-            for(int j = 0;j<board.length;j++)
-            {
+            for(int j = 0;j<board.length;j++) {
                 str.append(board[i][j]);
             }
             str.append(' ');
@@ -49,44 +54,58 @@ public class FoxHoundUI {
         }
         str.append("\n");
         str.append("  ");
-        for(int i = 0;i<board.length;i++)
-        {
+        for(int i = 0;i<board.length;i++) {
             str.append((char)(65+i));
         }
         str.append("  ");
-        // formatting the string based on the test cases. 
-        System.out.println(str.toString()); // printing the stringbuilder
+        System.out.println(str.toString());
     }
-    public static char[][] boardArray(String[] players,int dimension)
-    { // creating a 2d array to store the positions of fox, hounds, and empty positions. 
+
+    /**
+     *
+     * @param players containing the positions of the pieces
+     * @param dimension dimension of the board
+     * @return a 2D array with all the positions in players occupied by respective pieces
+     */
+    public static char[][] boardArray(String[] players,int dimension) {
         char [][] board = new char[dimension][dimension];
-        for(int i = 0;i<players.length;i++)
-        {
-            int r = row(players[i]);
-            int c = column(players[i]);
-            if (i == players.length-1)
+        for(int i = 0;i<players.length;i++) {
+            int r = getRow(players[i]);
+            int c = getColumn(players[i]);
+            if (i == players.length-1) {
                 board[r][c] = FoxHoundUtils.FOX_FIELD;
-            else
-                board[r][c] = FoxHoundUtils.HOUND_FIELD;
-        }
-        for(int  i = 0;i<board.length;i++)
-        {
-            for(int  j = 0;j<board.length;j++)
-            {
-                if (board[i][j] == '\u0000')
-                    board[i][j] = FoxHoundUtils.EMPTY_FIELD; // since the default value after filling with fox hound is an empty character, we will replace it with the empty field
             }
-        } 
-        return board; // returning the board
+            else {
+                board[r][c] = FoxHoundUtils.HOUND_FIELD;
+            }
+        }
+        for(int  i = 0;i<board.length;i++) {
+            for(int  j = 0;j<board.length;j++) {
+                if (board[i][j] == '\u0000') {
+                    board[i][j] = FoxHoundUtils.EMPTY_FIELD;
+                }
+            }
+        }
+        return board;
     }
-// for loop through and simply replace the element with the 
-    public static int row(String s)
+
+    /**
+     *
+     * @param s board coordinates of a piece as a string
+     * @return row of the piece
+     */
+    public static int getRow(String s)
     {
-        return (Integer.parseInt(s.substring(1))-1); // giving the row of a string position
+        return (Integer.parseInt(s.substring(1))-1);
     }
-    public static int column(String s)
-    {
-        int k = (int)(s.charAt(0)) - 65; // column of a string position
+
+    /**
+     *
+     * @param s board coordinates of a piece as a string
+     * @return column of the piece
+     */
+    public static int getColumn(String s) {
+        int k = (int)(s.charAt(0)) - 65;
         return k;
     }
     /**
@@ -129,69 +148,73 @@ public class FoxHoundUI {
 
         return input;
     }
-    public static String[] positionQuery(int dimension, Scanner stdIn)
-    {
-        String[] str = new String[2]; //asking for positions which is then stores in the array
+
+    /**
+     *
+     * @param dimension dimension of the board
+     * @param stdIn scanner object
+     * @return a string array containing the origin and destination of the piece
+     */
+    public static String[] positionQuery(int dimension, Scanner stdIn) {
+        String[] str = new String[2];
         boolean g = true;
         
-        do
-        {
+        do {
             System.out.println("Provide origin and destination coordinates.");
-            if (stdIn == null)
-            { // if our scanner object is null then throw an error
+            if (stdIn == null) {
                 g = false;
                 System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
                 continue;
             }
-            else if(dimension > FoxHoundUtils.MAX_DIM || dimension < FoxHoundUtils.MIN_DIM)
-            {
-                g = false; // if dimension invalid, throw and error
+            else if(dimension > FoxHoundUtils.MAX_DIM || dimension < FoxHoundUtils.MIN_DIM) {
+                g = false;
                 System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
                 continue;
             }
             System.out.println("Enter two positions between A1-H8:\n");
-            String t = stdIn.nextLine(); // reading the coordinates as one string and then splitting
+            String t = stdIn.nextLine();
             int j = 0;
             StringBuilder a = new StringBuilder();
             StringBuilder b = new StringBuilder();
-            for(int i =0;i<t.length();i++)
-            {
-                if(t.charAt(i) == ' ')
-                {
+            for(int i =0;i<t.length();i++) {
+                if(t.charAt(i) == ' ') {
                     a.append(t.substring(j,i));
-                    j = i+1; // appending to first string the first coordinate
+                    j = i+1;
                 }
             }
-            b.append(t.substring(j,t.length())); // next coordinate to another string
+            b.append(t.substring(j,t.length()));
             int c = 0;
             char row = a.charAt(0);
             char max = (char)(64+dimension);
             try{
-                c = Integer.parseInt(b.substring(1)); // parsting to integer if valid, else exception. That is why its in a try block
+                c = Integer.parseInt(b.substring(1));
             }
-            catch(NumberFormatException e)
-            {
-                g = false;
-                System.err.println("ERROR: Please enter valid coordinate pair separated by space."); // if invalid, exception thrown
-                continue;
-            }
-            if(row>max || c>dimension)
-            {
+            catch(NumberFormatException e) {
                 g = false;
                 System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
-                continue; // if the dimensions dont work then its an error
+                continue;
+            }
+            if(row>max || c>dimension) {
+                g = false;
+                System.err.println("ERROR: Please enter valid coordinate pair separated by space.");
+                continue;
             }
             str[0] = a.toString();
-            str[1] = b.toString(); // converting stringbuilder to string 
+            str[1] = b.toString();
             g = true;
         }while(!g);
-        return str; //returning the string array
+        return str;
     }
-    public static Path fileQuery(Scanner stdIn)
-    {
+
+    /**
+     *
+     * @param stdIn scanner object
+     * @return returning the file path as a path object
+     */
+    public static Path fileQuery(Scanner stdIn) {
         Objects.requireNonNull(stdIn, "Given Scanner must not be null");
         System.out.println("Enter file path:");
-        return Paths.get(stdIn.next()); // asking for file path as a string and giving it as a path object
+        return Paths.get(stdIn.next());
     }
 }
 
