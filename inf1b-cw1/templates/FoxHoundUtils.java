@@ -73,54 +73,19 @@ public class FoxHoundUtils {
      * @return checking if the move is valid
      */
     public static boolean isValidMove(int dim, String[] players, char figure,String origin,String destination) {
-        boolean hound_validity = true;
-        boolean fox_validity = true;
         if (players == null) {
             throw new NullPointerException();
         }
         if (figure != HOUND_FIELD && figure != FOX_FIELD) {
             throw new IllegalArgumentException();
         }
-        if (Character.isLetter(origin.charAt(0)) && Character.isLetter(destination.charAt(0))  && Character.isDigit(destination.charAt(1)) && Character.isDigit(destination.charAt(1))) {
-            int origin_row = (int)(origin.charAt(1)) - 49;
-            int origin_column = (int)(origin.charAt(0)) - 65;
-            int destination_row = (int)(destination.charAt(1)) - 49;
-            int destination_column = (int)(destination.charAt(0)) - 65;
-            // System.out.println(origin_row+" "+origin_column+" "+destination_row+" "+destination_column);
+        if (FoxHoundIO.isValidPosition(origin) && FoxHoundIO.isValidPosition(destination)) {
             switch(figure) {
                 case HOUND_FIELD: {
-                    hound_validity = hound_validity && !(origin.equals(players[players.length - 1]));
-                    hound_validity = hound_validity && (FoxHoundUtils.isOccupied(players, destination));
-                    hound_validity = hound_validity && (origin_row == destination_row - 1);
-                    if (origin_column == (dim - 1)) {
-                        hound_validity = hound_validity && (destination_column == (origin_column - 1));
-                    } else if (origin_column == 0) {
-                        hound_validity = hound_validity && (destination_column == origin_column + 1);
-                    } else {
-                        boolean test = (destination_column == (origin_column + 1)) || (destination_column == origin_column - 1);
-                        hound_validity = hound_validity && test;
-                    }
-                    return hound_validity;
+                    return isHoundValid(dim, players,'H',origin,destination);
                 }
                 case FOX_FIELD: {
-                    fox_validity = fox_validity && origin.equals(players[players.length - 1]);
-                    fox_validity = fox_validity && (FoxHoundUtils.isOccupied(players, destination));
-                    if (origin_row == (dim - 1)) {
-                        fox_validity = fox_validity && (destination_row == (origin_row - 1));
-                        fox_validity = fox_validity && ((destination_column == (origin_column + 1)) || (destination_column == (origin_column - 1)));
-                    } else {
-                        fox_validity = fox_validity && ((destination_row == (origin_row + 1)) || (destination_row == (origin_row - 1)));
-                        if (origin_column == (dim - 1)) {
-                            fox_validity = fox_validity && (destination_column == (origin_column - 1));
-                        }
-                        else if (origin_column == 0) {
-                            fox_validity = fox_validity && (destination_column == (origin_column + 1));
-                        }
-                        else {
-                            fox_validity = fox_validity && ((destination_column == (origin_column + 1)) || (destination_column == (origin_column - 1)));
-                        }
-                    }
-                    return fox_validity;
+                    return isFoxValid(dim, players, 'F', origin, destination);
                 }
                 default: {
                     return false;
@@ -130,25 +95,58 @@ public class FoxHoundUtils {
         else {
             return false;
         }
+
     }
 
-    /**
-     *
-     * @param players containing the positions of the fox and hounds
-     * @param destination the position to which the hound or fox will be moved
-     * @return if the object is already occupied
-     */
-    public static boolean isOccupied(String[] players, String destination) {
-        boolean g = true;
-        for(int i = 0;i<players.length;i++) {
-            if (players[i].equals(destination)) {
-                g = false;
-                break;
-            }
+
+    private static boolean isHoundValid(int dim, String[] players, char figure, String origin, String destination) {
+        boolean hound = true;
+        int or = FoxHoundUI.getRow(origin); //row of origin
+        int oc = FoxHoundUI.getColumn(origin); // column of origin
+        int dr = FoxHoundUI.getRow(destination); // row of destination
+        int dc = FoxHoundUI.getColumn(destination); // column of destination
+
+        hound = hound && !(origin.equals(players[players.length - 1]));
+        hound = hound && (FoxHoundUI.boardArray(players, dim)[dr][dc] == '.');
+
+        hound = hound && (or == dr - 1);
+        if (oc == (dim - 1)) {
+            hound = hound && (dc == (oc - 1));
+        } else if (oc == 0) {
+            hound = hound && (dc == oc + 1);
+        } else {
+            boolean test = (dc == (oc + 1)) || (dc == oc - 1);
+            hound = hound && test;
         }
-        return g;
+        return hound;
     }
+    private static boolean isFoxValid(int dim, String[] players, char figure, String origin, String destination) {
+        boolean fox = true;
+        int or = FoxHoundUI.getRow(origin); // row of the origin
+        int oc = FoxHoundUI.getColumn(origin); // column of the origin
+        int dr = FoxHoundUI.getRow(destination); // row of the destination 
+        int dc = FoxHoundUI.getColumn(destination); // column of the destination
+        
+        fox = fox && origin.equals(players[players.length - 1]);
+        fox = fox && (FoxHoundUI.boardArray(players, dim)[dr][dc] == EMPTY_FIELD);
+        
+        if (or == (dim - 1)) {
+            fox = fox && (dr == (or - 1));
+            fox = fox && ((dc == (oc + 1)) || (dc == (oc - 1)));
+        } 
+        else {
+            fox = fox && ((dr == (or + 1)) || (dr == (or - 1)));
+            if (oc == (dim - 1)) {
+                fox = fox && (dc == (oc - 1));
+            } else if (oc == 0) {
+                fox = fox && (dc == (oc + 1));
+            } else {
+                fox = fox && ((dc == (oc + 1)) || (dc == (oc - 1)));
+            }
 
+        }
+        return fox;
+    }
     /**
      *
      * @param fox_pos position of the fox in the board
@@ -158,7 +156,6 @@ public class FoxHoundUtils {
     {
         return FoxHoundUI.getRow(fox_pos) == 0;
     }
-
     /**
      *
      * @param players positions of fox and hounds in the board
