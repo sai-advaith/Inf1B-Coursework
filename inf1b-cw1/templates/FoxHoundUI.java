@@ -38,7 +38,7 @@ public class FoxHoundUI {
         str.append("  ");
         for(int i = 0;i<board.length;i++) {
             str.append((char)(65+i));
-        }
+        } // string builder to store the board in string form
         str.append("  ");
         str.append("\n");
         str.append("\n");
@@ -68,7 +68,7 @@ public class FoxHoundUI {
      * @return a 2D array with all the positions in players occupied by respective pieces
      */
     public static char[][] boardArray(String[] players,int dimension) {
-        char [][] board = new char[dimension][dimension];
+        char [][] board = new char[dimension][dimension]; // 2d array
         for(int i = 0;i<players.length;i++) {
             int r = getRow(players[i]);
             int c = getColumn(players[i]);
@@ -172,7 +172,7 @@ public class FoxHoundUI {
             System.out.println("Enter two positions between A1-H8:\n");
             String t = stdIn.nextLine();
             int j = 0;
-            StringBuilder a = new StringBuilder();
+            StringBuilder a = new StringBuilder(); // an entire string as the input and not seperate
             StringBuilder b = new StringBuilder();
             for(int i =0;i<t.length();i++) {
                 if(t.charAt(i) == ' ') {
@@ -209,7 +209,7 @@ public class FoxHoundUI {
      * @param stdIn scanner object
      * @return returning the file path as a path object
      */
-    public static Path fileQuery(Scanner stdIn) {
+    public static Path fileQuery(Scanner stdIn) { // taking file path
         Objects.requireNonNull(stdIn, "Given Scanner must not be null");
         System.out.println("Enter file path:");
         return Paths.get(stdIn.next());

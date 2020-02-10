@@ -24,22 +24,18 @@ public class FoxHoundIO {
 
     public static boolean saveGame(String[] players, char turn, Path PATH) throws NullPointerException, IllegalArgumentException {
         boolean g = true;
-
-        if(players == null)
+        if(players == null || PATH == null) {
             throw new NullPointerException();
-        if(players.length != 5)
+        }
+        if(players.length != 5) {
             throw new IllegalArgumentException();
-
-        if (turn != FoxHoundUtils.HOUND_FIELD && turn != FoxHoundUtils.FOX_FIELD)
+        }
+        if (turn != FoxHoundUtils.HOUND_FIELD && turn != FoxHoundUtils.FOX_FIELD) {
             throw new IllegalArgumentException();
-
-        else if (PATH == null)
-            throw new NullPointerException();
-
+        }
         StringBuilder str = new StringBuilder(turn + " ");
-
         for(int  i = 0;i<players.length;i++) {
-            str = str.append(players[i] + " ");
+            str = str.append(players[i] + " "); // current game
         }
         File file;
         try
@@ -48,12 +44,10 @@ public class FoxHoundIO {
             if (file.exists())
                 g = false;
             else {
-                FileWriter fw = new FileWriter(file);
-                BufferedWriter bw = new BufferedWriter(fw);
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file)); // using bufferedwriter to write the string
                 bw.write(str.toString());
                 bw.close();
             }
-
         }
         catch(IOException e) {
             return false;
@@ -77,12 +71,9 @@ public class FoxHoundIO {
             return '#';
         }
         try {
-            byte[] encode;
-            String str;
-            String[] words;
-            encode = Files.readAllBytes(PATH);
-            str = new String(encode);
-            words = str.split(" ",0);
+            byte[] encode = Files.readAllBytes(PATH);
+            String str = new String(encode);
+            String[] words = str.split(" ",0);
             String d = words[0];
             String[] cop = new String[words.length - 1];
             if (!(d.equals("H") || words[0].equals("F"))) {
@@ -98,7 +89,7 @@ public class FoxHoundIO {
             if(!g) {
                 int  j = 0;
                 for(int i = 1;i < words.length;i++) {
-                    cop[j] = words[i];
+                    cop[j] = words[i]; // creating a duplicate to create a deep copy of the object
                     j ++;
                 }
                 for(int i = 0;i<cop.length;i++) {

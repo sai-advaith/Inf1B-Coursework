@@ -25,7 +25,7 @@ public class FoxHoundGame {
      * exits. Additionally, it reduces complexity. 
      */
     private static final Scanner STDIN_SCAN = new Scanner(System.in);
-
+    private static final char INVALID_LOAD = '#';
     /**
      * Swap between fox and hounds to determine the next
      * figure to move.
@@ -68,10 +68,8 @@ public class FoxHoundGame {
                         if (c>0) {
                             System.err.println("ERROR: invalid input");
                         }
-                        // System.out.println(FoxHoundUtils.isFoxWin(k[0]));
-                        // System.out.println(turn == 'F');
-                        String current_fox = players[players.length-1];
-                        if(FoxHoundUtils.isFoxWin(current_fox)) {
+                        String f = players[players.length-1]; // fox position
+                        if(FoxHoundUtils.isFoxWin(f)) {
                             System.out.println("Fox has won");
                             System.exit(0);
                         }
@@ -82,9 +80,8 @@ public class FoxHoundGame {
                         k = FoxHoundUI.positionQuery(dim, STDIN_SCAN);
                         g = FoxHoundUtils.isValidMove(dim, players, turn, k[0], k[1]);
                         c++;
-                    }while(!g);   
-                        int d = findPosition(players,k[0]);
-                        players[d] = k[1];
+                    }while(!g);
+                        players[findPosition(players,k[0])] = k[1];
                         turn = swapPlayers(turn);
                         System.out.println(Arrays.toString(players));
                     break;
@@ -100,7 +97,7 @@ public class FoxHoundGame {
                 case FoxHoundUI.LOAD_MOVE: {
                     Path p1 = FoxHoundUI.fileQuery(STDIN_SCAN);
                     char ch = FoxHoundIO.loadGame(players, p1);
-                    if (ch == '#') {
+                    if (ch == INVALID_LOAD) {
                         System.err.println("ERROR: Loading from file failed.");
                     }
                     break;
@@ -121,7 +118,7 @@ public class FoxHoundGame {
      * @param w String to be searched for in the array
      * @return the index of the string in the array
      */
-    public static int findPosition(String[] players, String w) {
+    private static int findPosition(String[] players, String w) {
         int k = 0;
         for(int i = 0;i<players.length;i++) {
             if(players[i].equals(w)) {
@@ -150,7 +147,7 @@ public class FoxHoundGame {
         if (args == null || args.length > 1)
             throw new IOException();
         else
-        {
+        { // command line argument
             dimension = Integer.parseInt(args[0]);
             if(dimension > FoxHoundUtils.MAX_DIM || dimension < FoxHoundUtils.MIN_DIM)
                 throw new IllegalArgumentException();
