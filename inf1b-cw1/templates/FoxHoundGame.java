@@ -145,9 +145,16 @@ public class FoxHoundGame {
      * @param args contain the command line arguments where the first can be
      * board dimensions.
      */
-    public static void main(String[] args) throws IOException {
-
-        int dimension = FoxHoundUtils.DEFAULT_DIM;
+    public static void main(String[] args) throws IOException,IllegalArgumentException {
+        int dimension = 0;
+        if (args == null || args.length > 1)
+            throw new IOException();
+        else
+        {
+            dimension = Integer.parseInt(args[0]);
+            if(dimension > FoxHoundUtils.MAX_DIM || dimension < FoxHoundUtils.MIN_DIM)
+                throw new IllegalArgumentException();
+        }
         String[] players = FoxHoundUtils.initialisePositions(dimension);
         gameLoop(dimension, players);
         STDIN_SCAN.close();
