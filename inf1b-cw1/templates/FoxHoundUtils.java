@@ -39,9 +39,8 @@ public class FoxHoundUtils {
             if (dimension < MIN_DIM || dimension > MAX_DIM) {
                 throw new IllegalArgumentException(); }
             int hounds = (int)Math.floor(dimension/2);
-            int fox= DEFAULT_FOX;
             StringBuilder s = new StringBuilder();
-            String positions[] = new String[hounds+fox];
+            String[] positions = new String[hounds+DEFAULT_FOX];
             int j = 0;
 
             for(int i = 1;i<dimension;i++) { // Hounds implementation
@@ -81,8 +80,8 @@ public class FoxHoundUtils {
         if (figure != HOUND_FIELD && figure != FOX_FIELD) { throw new IllegalArgumentException(); }
         if (FoxHoundIO.isValidPosition(origin) && FoxHoundIO.isValidPosition(destination)) {
             switch(figure) {
-                case HOUND_FIELD: { return isHoundValid(dim, players,'H',origin,destination); }
-                case FOX_FIELD: { return isFoxValid(dim, players, 'F', origin, destination); }
+                case HOUND_FIELD: { return isHoundValid(dim, players,origin,destination); }
+                case FOX_FIELD: { return isFoxValid(dim, players, origin, destination); }
                 default: { return false; }
             }
         }
@@ -91,9 +90,15 @@ public class FoxHoundUtils {
         }
 
     }
-
-
-    private static boolean isHoundValid(int dim, String[] players, char figure, String origin, String destination) {
+    /**
+     *
+     * @param dim dimension of the board
+     * @param players containing the positions of the pieces
+     * @param origin origin of the hound
+     * @param destination destination of the hound
+     * @return if the move is valid
+     */
+    private static boolean isHoundValid(int dim, String[] players, String origin, String destination) {
         boolean hound = true;
         int or = FoxHoundUI.getRow(origin); //row of origin
         int oc = FoxHoundUI.getColumn(origin); // column of origin
@@ -113,7 +118,16 @@ public class FoxHoundUtils {
 
         return hound;
     }
-    private static boolean isFoxValid(int dim, String[] players, char figure, String origin, String destination) {
+
+    /**
+     *
+     * @param dim the dimension of the board
+     * @param players positions of the pieces on the board
+     * @param origin the origin of the fox
+     * @param destination destination of teh fox
+     * @return if the move is valid
+     */
+    private static boolean isFoxValid(int dim, String[] players, String origin, String destination) {
         boolean fox = true;
         int or = FoxHoundUI.getRow(origin); // row of the origin
         int oc = FoxHoundUI.getColumn(origin); // column of the origin
@@ -159,11 +173,18 @@ public class FoxHoundUtils {
                 throw new IllegalArgumentException();
             }
     }
+
+    /**
+     *
+     * @param players containing the positions of the pieces
+     * @param dimension the dimension of the board
+     * @return if the fox cannot move anywhere and the hound has won
+     */
     private static boolean fox_movement(String[] players, int dimension) {
         int fr = FoxHoundUI.getRow(players[players.length-1]);
         int fc = FoxHoundUI.getColumn(players[players.length-1]);
 
-        char board[][] = FoxHoundUI.boardArray(players,dimension);
+        char[][] board = FoxHoundUI.boardArray(players,dimension);
 
         if(fc == 0 && fr != dimension - 1) {
             return (board[fr + 1][fc + 1] == 'H' &&

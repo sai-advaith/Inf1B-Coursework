@@ -1,14 +1,13 @@
 import java.util.Scanner;
-
-/** 
+import java.nio.file.*;
+import java.io.*;
+import java.util.*;
+/**
  * The Main class of the fox hound program.
- * 
+ *
  * It contains the main game loop where main menu interactions
  * are processed and handler functions are called.
-  */
-  import java.nio.file.*;
-  import java.io.*;
-  import java.util.*;
+ */
 public class FoxHoundGame {
 
     /** 

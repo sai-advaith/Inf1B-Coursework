@@ -1,16 +1,15 @@
 import java.nio.file.Path;
-
-/**
- * A utility class for the fox hound program.
- * 
- * It contains helper functions for all file input / output
- * related operations such as saving and loading a game.
- */
 import java.nio.file.Files;
 import java.nio.file.*;
 import java.io.*;
 import java.lang.Object;
 import java.util.*;
+/**
+ * A utility class for the fox hound program.
+ *
+ * It contains helper functions for all file input / output
+ * related operations such as saving and loading a game.
+ */
 public class FoxHoundIO {
     /**
      *
@@ -34,8 +33,8 @@ public class FoxHoundIO {
             throw new IllegalArgumentException();
         }
         StringBuilder str = new StringBuilder(turn + " ");
-        for(int  i = 0;i<players.length;i++) {
-            str = str.append(players[i] + " "); // current game
+        for (String player : players) {
+            str.append(player).append(" "); // current game
         }
         File file;
         try
@@ -119,14 +118,9 @@ public class FoxHoundIO {
      * @param pos the position of a piece to be checked for validity
      * @return if the position is valid or not
      */
-    public static boolean isValidPosition(String pos) {
+    static boolean isValidPosition(String pos) {
         if(Character.isLetter(pos.charAt(0)) && (Character.isDigit(pos.charAt(1)))) {
-            if (FoxHoundUI.getRow(pos) > 7 || FoxHoundUI.getColumn(pos) > 7) {
-                return false;
-            }
-            else {
-                return true;
-            }
+            return FoxHoundUI.getRow(pos) <= 7 && FoxHoundUI.getColumn(pos) <= 7;
         }
         else {
             return false;
