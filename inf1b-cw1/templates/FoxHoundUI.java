@@ -94,8 +94,7 @@ public class FoxHoundUI {
      * @param s board coordinates of a piece as a string
      * @return row of the piece
      */
-    public static int getRow(String s)
-    {
+    public static int getRow(String s) {
         return (Integer.parseInt(s.substring(1))-1);
     }
 
@@ -158,7 +157,6 @@ public class FoxHoundUI {
     public static String[] positionQuery(int dimension, Scanner stdIn) {
         String[] str = new String[2];
         boolean g = true;
-        
         do {
             System.out.println("Provide origin and destination coordinates.");
             if (stdIn == null) {
