@@ -1,9 +1,6 @@
 import java.nio.file.Path;
 import java.nio.file.Files;
-import java.nio.file.*;
 import java.io.*;
-import java.lang.Object;
-import java.util.*;
 /**
  * A utility class for the fox hound program.
  *
@@ -73,7 +70,7 @@ public class FoxHoundIO {
             byte[] encode = Files.readAllBytes(PATH);
             String str = new String(encode);
             String[] words = str.split(" ",0);
-            String d = words[0];
+            String d = words[0]; // reading all the bytes from a string and splitting based on a regex
             String[] cop = new String[words.length - 1];
             if (!(d.equals("H") || words[0].equals("F"))) {
                 return '#';

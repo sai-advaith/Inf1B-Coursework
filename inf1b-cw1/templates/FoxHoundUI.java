@@ -1,6 +1,4 @@
 
-    import javax.lang.model.util.ElementScanner6;
-
     import java.nio.file.Paths;
     import java.nio.file.Path;
     import java.util.*;

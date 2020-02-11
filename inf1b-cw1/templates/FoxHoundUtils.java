@@ -1,11 +1,11 @@
+
+import java.lang.*;
 /**
  * A utility class for the fox hound program.
- * 
+ *
  * It contains helper functions to check the state of the game
  * board and validate board coordinates and figure positions.
  */
-import java.util.*;
-import java.lang.*; 
 public class FoxHoundUtils {
 
     // ATTENTION: Changing the following given constants can 
@@ -188,28 +188,28 @@ public class FoxHoundUtils {
 
         if(fc == 0 && fr != dimension - 1) {
             return (board[fr + 1][fc + 1] == 'H' &&
-                    board[fr - 1][fc + 1] == 'H');
+                    board[fr - 1][fc + 1] == 'H'); // first column check
         }
 
         else if (fc == dimension - 1 && fr != dimension - 1) {
             return (board[fr + 1][fc - 1] == 'H' &&
-                    board[fr - 1][fc + 1] == 'H');
+                    board[fr - 1][fc - 1] == 'H'); // last column check
         }
 
         else if(fr == dimension-1 && (fc != 0 && fc != dimension - 1)) {
             return (board[fr - 1][fc - 1] == 'H' &&
-                    board[fr - 1][fc + 1] == 'H');
+                    board[fr - 1][fc + 1] == 'H'); // lsat row check
         }
 
         else if (fr == dimension-1 && fc == 0) {
-            return (board[fr - 1][fc + 1] == 'H');
+            return (board[fr - 1][fc + 1] == 'H'); // bottom left corner check
         }
 
         else if (fr == dimension - 1 && fc == dimension - 1) {
-            return (board[fr - 1][fc - 1] == 'H');
+            return (board[fr - 1][fc - 1] == 'H'); // bottom right corner check
         }
 
-        else {
+        else {//everywhere else check
             return (board[fr + 1][fc + 1] == 'H' &&
                     board[fr + 1][fc - 1] == 'H' &&
                     board[fr - 1][fc + 1] == 'H' &&
