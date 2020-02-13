@@ -41,7 +41,6 @@
             str.append("\n");
             str.append("\n");
             for(int i = 0;i<board.length;i++) {
-                System.out.println(i+""+dimension);
                 if (dimension < 10 || (dimension >= 10 && i >= 9)) {
                     str.append(i+1);
                 }
