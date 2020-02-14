@@ -141,10 +141,10 @@ public class FoxHoundGame {
      * @param args contain the command line arguments where the first can be
      * board dimensions.
      */
-    public static void main(String[] args) throws IOException,IllegalArgumentException {
+    public static void main(String[] args) throws IllegalArgumentException {
         int dimension = 0;
         if (args == null || args.length > 1)
-            throw new IOException();
+            throw new IllegalArgumentException();
         else
         { // command line argument
             dimension = Integer.parseInt(args[0]);
