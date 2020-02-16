@@ -142,7 +142,7 @@ public class FoxHoundGame {
      */
     public static void main(String[] args) throws IllegalArgumentException {
         int dimension = FoxHoundUtils.DEFAULT_DIM;
-        if (args == null || args.length > 1)
+        if (args.length != 1)
             throw new IllegalArgumentException();
         else
         { // command line argument
