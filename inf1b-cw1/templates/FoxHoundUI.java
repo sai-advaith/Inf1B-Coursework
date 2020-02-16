@@ -41,13 +41,25 @@
             str.append("\n");
             str.append("\n");
             for(int i = 0;i<board.length;i++) {
-                str.append((i+1));
+                if (dimension < 10 || (dimension >= 10 && i >= 9)) {
+                    str.append(i+1);
+                }
+                else if(dimension >= 10 && i<9) {
+                    str.append("0");
+                    str.append((i+1));
+                }
                 str.append(' ');
                 for(int j = 0;j<board.length;j++) {
                     str.append(board[i][j]);
                 }
                 str.append(' ');
-                str.append(1+i);
+                if (dimension < 10 || (dimension >= 10 && i >= 9)) {
+                    str.append(i+1);
+                } 
+                else if(dimension >= 10 && i < 9){
+                    str.append("0");
+                    str.append((i+1));
+                }
                 str.append("\n");
             }
             str.append("\n");
