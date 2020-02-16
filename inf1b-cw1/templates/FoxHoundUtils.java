@@ -104,9 +104,9 @@ public class FoxHoundUtils {
         int oc = FoxHoundUI.getColumn(origin); // column of origin
         int dr = FoxHoundUI.getRow(destination); // row of destination
         int dc = FoxHoundUI.getColumn(destination); // column of destination
-
         hound = hound && !(origin.equals(players[players.length - 1]));
-        hound = hound && (FoxHoundUI.boardArray(players, dim)[dr][dc] == '.');
+        hound = hound && (FoxHoundUI.boardArray(players, dim)[dr][dc] == EMPTY_FIELD);
+        hound = hound && (FoxHoundUI.boardArray(players, dim)[or][oc] == HOUND_FIELD);
         hound = hound && (or == dr - 1);
         // different cases based on different positions of the fox
         if (oc == (dim - 1)) { hound = hound && (dc == (oc - 1)); }
@@ -136,6 +136,7 @@ public class FoxHoundUtils {
         
         fox = fox && origin.equals(players[players.length - 1]);
         fox = fox && (FoxHoundUI.boardArray(players, dim)[dr][dc] == EMPTY_FIELD);
+        fox = fox && (FoxHoundUI.boardArray(players, dim)[or][oc] == FOX_FIELD);
         // different cases for different positions
         if (or == (dim - 1)) {
             fox = fox && (dr == (or - 1));

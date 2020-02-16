@@ -117,7 +117,16 @@ public class FoxHoundIO {
      */
     static boolean isValidPosition(String pos) {
         if(Character.isLetter(pos.charAt(0)) && (Character.isDigit(pos.charAt(1)))) {
-            return FoxHoundUI.getRow(pos) <= 7 && FoxHoundUI.getColumn(pos) <= 7;
+            if (FoxHoundUI.getRow(pos)% 2 == 0) {
+                return (FoxHoundUI.getRow(pos) <= 7 
+                && FoxHoundUI.getColumn(pos) <= 7) 
+                && (FoxHoundUI.getColumn(pos)%2 == 1);
+            }
+            else {
+                return (FoxHoundUI.getRow(pos) <= 7 
+                && FoxHoundUI.getColumn(pos) <= 7) 
+                && (FoxHoundUI.getColumn(pos)%2 == 0);
+            }
         }
         else {
             return false;
