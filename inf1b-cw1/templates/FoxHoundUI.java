@@ -206,8 +206,10 @@
          * @param stdIn scanner object
          * @return returning the file path as a path object
          */
-        public static Path fileQuery(Scanner stdIn) { // taking file path
-            Objects.requireNonNull(stdIn, "Given Scanner must not be null");
+        public static Path fileQuery(Scanner stdIn) throws NullPointerException{ // taking file path
+            if(stdIn==null) {
+                throw new NullPointerException();
+            }
             System.out.println("Enter file path:");
             return Paths.get(stdIn.next());
         }
