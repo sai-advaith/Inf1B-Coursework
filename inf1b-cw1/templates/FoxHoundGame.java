@@ -82,7 +82,6 @@ public class FoxHoundGame {
                     }while(!g);
                         players[findPosition(players,k[0])] = k[1];
                         turn = swapPlayers(turn);
-                        System.out.println(Arrays.toString(players));
                     break;
                 }
                 case FoxHoundUI.SAVE_MOVE: {
@@ -142,7 +141,7 @@ public class FoxHoundGame {
      * board dimensions.
      */
     public static void main(String[] args) throws IllegalArgumentException {
-        int dimension = 0;
+        int dimension = FoxHoundUtils.DEFAULT_DIM;
         if (args == null || args.length > 1)
             throw new IllegalArgumentException();
         else
