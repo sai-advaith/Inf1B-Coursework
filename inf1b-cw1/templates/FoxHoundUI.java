@@ -41,25 +41,13 @@
             str.append("\n");
             str.append("\n");
             for(int i = 0;i<board.length;i++) {
-                if (dimension < 10 || (dimension >= 10 && i >= 9)) {
-                    str.append(i+1);
-                }
-                else if(dimension >= 10 && i<9) {
-                    str.append("0");
-                    str.append((i+1));
-                }
+                str.append((i+1));
                 str.append(' ');
                 for(int j = 0;j<board.length;j++) {
                     str.append(board[i][j]);
                 }
                 str.append(' ');
-                if (dimension < 10 || (dimension >= 10 && i >= 9)) {
-                    str.append(i+1);
-                } 
-                else if(dimension >= 10 && i < 9){
-                    str.append("0");
-                    str.append((i+1));
-                }
+                str.append(1+i);
                 str.append("\n");
             }
             str.append("\n");
@@ -220,7 +208,7 @@
          */
         public static Path fileQuery(Scanner stdIn) throws NullPointerException{ // taking file path
             if(stdIn==null) {
-                throw new NullPointerException();
+                throw new NullPointerException("Require objects to be null");
             }
             System.out.println("Enter file path:");
             return Paths.get(stdIn.next());
