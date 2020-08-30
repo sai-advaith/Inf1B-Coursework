@@ -1,2 +1,2 @@
-# Inf1B-Coursework
-Implementation of Fox & Hound using Java
+# Inf1B-Coursework 1
+Implementation of Fox & Hound using Java. (Not graded)
